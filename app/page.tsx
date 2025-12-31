@@ -6,7 +6,19 @@ import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { services } from "@/lib/services-data"
 import { blogPosts } from "@/lib/blog-data"
-import { ArrowRight, CheckCircle2, Users, Award, TrendingUp, Terminal } from "lucide-react"
+import {
+  ArrowRight,
+  CheckCircle2,
+  Users,
+  Award,
+  TrendingUp,
+  Terminal,
+  Database,
+  Cloud,
+  Lock,
+  Zap,
+  Globe,
+} from "lucide-react"
 
 export default function Home() {
   const latestPosts = blogPosts.slice(0, 3)
@@ -16,6 +28,49 @@ export default function Home() {
     { label: "Uptime SLA", value: "99.99%", icon: TrendingUp },
     { label: "Cloud Certifications", value: "150+", icon: Award },
     { label: "Years of Experience", value: "15+", icon: CheckCircle2 },
+  ]
+
+  const cloudProviders = [
+    { name: "Amazon Web Services", short: "AWS" },
+    { name: "Google Cloud Platform", short: "GCP" },
+    { name: "Microsoft Azure", short: "Azure" },
+    { name: "Akamai/Linode", short: "Linode" },
+  ]
+
+  const technologies = [
+    { name: "Kafka", icon: Database },
+    { name: "Kubernetes", icon: Cloud },
+    { name: "MongoDB", icon: Database },
+    { name: "Redis", icon: Zap },
+    { name: "PostgreSQL", icon: Database },
+    { name: "Elasticsearch", icon: Database },
+  ]
+
+  const differentiators = [
+    {
+      icon: Lock,
+      title: "Security-First Architecture",
+      description:
+        "SOC 2 Type II certified operations with comprehensive compliance coverage for HIPAA, PCI-DSS, and GDPR requirements",
+    },
+    {
+      icon: Zap,
+      title: "Proprietary AIOps Platform",
+      description:
+        "ML-driven predictive monitoring and automated remediation reducing MTTR by 80% and preventing 95% of incidents",
+    },
+    {
+      icon: Globe,
+      title: "True Multi-Cloud Expertise",
+      description:
+        "Certified architects across AWS, GCP, Azure, and Linode with experience optimizing costs through strategic placement",
+    },
+    {
+      icon: Users,
+      title: "24/7/365 Expert Support",
+      description:
+        "Follow-the-sun coverage with 15-minute response time SLA and direct access to senior engineers, not tier-1 support",
+    },
   ]
 
   return (
@@ -32,26 +87,41 @@ export default function Home() {
           <div className="font-mono text-6xl">$_</div>
         </div>
         <div className="container mx-auto px-6 relative">
-          <div className="max-w-3xl">
+          <div className="max-w-4xl">
             <Badge variant="secondary" className="mb-6 font-mono">
-              $ enterprise-infrastructure --ready
+              $ enterprise-infrastructure --production-ready
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-balance">
-              Scale Your Infrastructure with Confidence
+              Enterprise Infrastructure That Scales With Your Ambition
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed text-pretty">
-              Expert DevOps, managed services, and cloud infrastructure solutions for modern enterprises. From migration
-              to optimization, we handle the complexity so you can focus on innovation.
+            <p className="text-xl text-muted-foreground mb-8 leading-relaxed text-pretty max-w-3xl">
+              TheCloudbox delivers expert-managed DevOps, multi-cloud infrastructure, and database operations for
+              companies that can't afford downtime. From migration strategy to 24/7 operations, we handle the complexity
+              while you focus on building products that matter.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 mb-12">
               <Button size="lg" asChild>
                 <Link href="/get-started">
                   Get Started <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="/services">View Services</Link>
+                <Link href="/case-studies">View Success Stories</Link>
               </Button>
+            </div>
+            <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-primary" />
+                <span>SOC 2 Type II Certified</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-primary" />
+                <span>HIPAA Compliant</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-primary" />
+                <span>24/7 Expert Support</span>
+              </div>
             </div>
           </div>
         </div>
@@ -75,14 +145,65 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Overview */}
+      <section className="py-12 bg-muted/30">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-8">
+            <p className="text-sm text-muted-foreground mb-4">Certified partners across all major cloud platforms</p>
+            <div className="flex flex-wrap justify-center items-center gap-8">
+              {cloudProviders.map((provider) => (
+                <div
+                  key={provider.short}
+                  className="text-xl font-bold text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {provider.short}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-24">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Leading Companies Choose TheCloudbox</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
+              We're not just another managed services provider. We're infrastructure engineers who've operated systems
+              at the world's most demanding scale.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {differentiators.map((item, index) => {
+              const Icon = item.icon
+              return (
+                <Card key={index} className="hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6">
+                    <div className="flex gap-4">
+                      <div className="p-3 bg-primary/10 rounded-lg shrink-0 h-fit">
+                        <Icon className="h-6 w-6 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+                        <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Overview */}
+      <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Comprehensive Infrastructure Services</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
-              From strategy to execution, we deliver end-to-end infrastructure solutions tailored to your business
-              needs.
+              From strategy to execution, we deliver end-to-end infrastructure solutions tailored to your business needs
+              and compliance requirements.
             </p>
           </div>
 
@@ -119,14 +240,46 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="py-24">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Managed Database & Infrastructure Technologies</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Expert-managed operations for the technologies powering modern applications
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
+            {technologies.map((tech) => {
+              const Icon = tech.icon
+              return (
+                <Card key={tech.name} className="hover:shadow-md transition-shadow">
+                  <CardContent className="p-6 text-center">
+                    <Icon className="h-8 w-8 text-primary mx-auto mb-3" />
+                    <div className="font-semibold text-sm">{tech.name}</div>
+                  </CardContent>
+                </Card>
+              )
+            })}
+          </div>
+          <div className="text-center mt-8">
+            <Button variant="ghost" asChild>
+              <Link href="/services#managed-databases">
+                View All Managed Services <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Tech Blog Section */}
       <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-6">
           <div className="flex items-end justify-between mb-12">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Latest from Our Blog</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Latest from Our Engineering Blog</h2>
               <p className="text-lg text-muted-foreground">
-                Expert insights on DevOps, cloud infrastructure, and modern operations.
+                Deep technical insights on DevOps, AIOps, cloud infrastructure, and database operations from our team of
+                expert engineers.
               </p>
             </div>
             <Button variant="ghost" asChild className="hidden md:flex">
@@ -182,15 +335,15 @@ export default function Home() {
                 Ready to Transform Your Infrastructure?
               </h2>
               <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto text-balance">
-                Let's discuss how we can help you achieve your infrastructure goals with our proven expertise and
-                comprehensive services.
+                Join 500+ enterprises trusting TheCloudbox with their mission-critical infrastructure. Let's discuss how
+                we can accelerate your cloud journey with proven expertise and comprehensive managed services.
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <Button size="lg" asChild>
                   <Link href="/contact">Schedule a Consultation</Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
-                  <Link href="/case-studies">View Case Studies</Link>
+                  <Link href="/case-studies">View Success Stories</Link>
                 </Button>
               </div>
             </CardContent>

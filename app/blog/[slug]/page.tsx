@@ -2,10 +2,43 @@ import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 import { blogPosts } from "@/lib/blog-data"
 import Link from "next/link"
-import { ArrowLeft, Clock, Calendar, User } from "lucide-react"
+import { ArrowLeft, Clock, Calendar, User, ArrowRight, Mail, Phone } from "lucide-react"
 import { notFound } from "next/navigation"
+import type { Metadata } from "next"
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const post = blogPosts.find((p) => p.slug === params.slug)
+
+  if (!post) {
+    return {
+      title: "Post Not Found",
+    }
+  }
+
+  return {
+    title: `${post.title} | TheCloudbox Blog`,
+    description: post.excerpt,
+    keywords: post.tags.join(", "),
+    authors: [{ name: post.author.name }],
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: "article",
+      publishedTime: post.date,
+      authors: [post.author.name],
+      images: post.image ? [post.image] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: post.image ? [post.image] : [],
+    },
+  }
+}
 
 export function generateStaticParams() {
   return blogPosts.map((post) => ({
@@ -86,7 +119,6 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             {/* Article Content */}
             <div className="prose prose-lg dark:prose-invert max-w-none">
               {post.content.split("\n\n").map((paragraph, index) => {
-                // Check if it's a heading
                 if (paragraph.startsWith("## ")) {
                   return (
                     <h2 key={index} className="text-2xl font-bold mt-12 mb-4 text-balance">
@@ -94,7 +126,6 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                     </h2>
                   )
                 }
-                // Check if it's a bold paragraph (starts with **)
                 if (paragraph.startsWith("**") && paragraph.includes("**")) {
                   const parts = paragraph.split("**")
                   return (
@@ -138,6 +169,43 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 ))}
               </div>
             )}
+
+            <Card className="mt-12 border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/5">
+              <CardContent className="p-8">
+                <div className="text-center space-y-4">
+                  <h3 className="text-2xl font-bold">Ready to Transform Your Infrastructure?</h3>
+                  <p className="text-muted-foreground max-w-2xl mx-auto">
+                    Let TheCloudbox help you implement these best practices. Our team of experts has delivered solutions
+                    for Paytm, Gojek, IRCTC, and more. Get a free consultation today.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+                    <Button size="lg" asChild className="group">
+                      <Link href="/contact">
+                        Schedule Consultation
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </Button>
+                    <Button size="lg" variant="outline" asChild>
+                      <Link href="/services">
+                        <Mail className="mr-2 h-4 w-4" />
+                        View Our Services
+                      </Link>
+                    </Button>
+                  </div>
+                  <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center items-center text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4" />
+                      <span>+1 (555) 123-4567</span>
+                    </div>
+                    <div className="hidden sm:block">•</div>
+                    <div className="flex items-center gap-2">
+                      <Mail className="h-4 w-4" />
+                      <span>contact@thecloudbox.com</span>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </article>
 
@@ -151,12 +219,12 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                   <Link
                     key={relatedPost.id}
                     href={`/blog/${relatedPost.slug}`}
-                    className="group block p-4 rounded-lg border bg-card hover:shadow-lg transition-shadow"
+                    className="group block p-4 rounded-lg border bg-card hover:shadow-lg hover:border-sea-green transition-all"
                   >
                     <Badge variant="secondary" className="mb-3">
                       {relatedPost.category}
                     </Badge>
-                    <h3 className="font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                    <h3 className="font-semibold mb-2 group-hover:text-sea-green transition-colors line-clamp-2">
                       {relatedPost.title}
                     </h3>
                     <p className="text-sm text-muted-foreground">{relatedPost.readTime}</p>
@@ -166,6 +234,28 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             </div>
           </section>
         )}
+
+        <section className="py-12 border-t">
+          <div className="container mx-auto px-6 max-w-4xl">
+            <Card className="border-2">
+              <CardContent className="p-8 text-center">
+                <h3 className="text-2xl font-bold mb-3">Stay Updated with DevOps Insights</h3>
+                <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
+                  Subscribe to our newsletter for weekly updates on AIOps, cloud migrations, and infrastructure best
+                  practices.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  />
+                  <Button type="submit">Subscribe</Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
       </main>
 
       <SiteFooter />

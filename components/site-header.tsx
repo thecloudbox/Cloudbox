@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { CloudboxLogoCompact } from "@/components/cloudbox-logo"
+import { CloudboxLogo, CloudboxLogoCompact } from "@/components/cloudbox-logo"
 
 export function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false)
@@ -13,6 +13,9 @@ export function SiteHeader() {
   const navigation = [
     { name: "Services", href: "/services" },
     { name: "Solutions", href: "/solutions" },
+    { name: "Tools", href: "/tools" },
+    { name: "Case Studies", href: "/case-studies" },
+    { name: "Partners", href: "/partners" },
     { name: "Blog", href: "/blog" },
     { name: "About", href: "/about" },
   ]
@@ -21,17 +24,17 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <nav className="container mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center">
-          <CloudboxLogoCompact className="hidden sm:flex" />
-          <CloudboxLogoCompact className="sm:hidden" />
+          <CloudboxLogo className="hidden lg:flex" />
+          <CloudboxLogoCompact className="lg:hidden" />
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm font-medium text-muted-foreground hover:text-sea-green transition-colors"
             >
               {item.name}
             </Link>
@@ -61,7 +64,7 @@ export function SiteHeader() {
                   key={item.name}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="text-lg font-medium hover:text-primary transition-colors"
+                  className="text-lg font-medium hover:text-sea-green transition-colors"
                 >
                   {item.name}
                 </Link>

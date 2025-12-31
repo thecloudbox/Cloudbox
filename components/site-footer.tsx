@@ -7,24 +7,26 @@ export function SiteFooter() {
       { name: "DevOps Engineering", href: "/services#devops" },
       { name: "Managed Services", href: "/services#managed-services" },
       { name: "Cloud Migration", href: "/services#cloud-migration" },
+      { name: "Infrastructure as Code", href: "/services#iac" },
       { name: "Cost Optimization", href: "/services#cost-optimization" },
+    ],
+    Solutions: [
+      { name: "All Solutions", href: "/solutions" },
+      { name: "Case Studies", href: "/case-studies" },
+      { name: "DevOps Tools", href: "/tools" },
+      { name: "Partner Program", href: "/partners" },
     ],
     Resources: [
       { name: "Blog", href: "/blog" },
-      { name: "Case Studies", href: "/case-studies" },
       { name: "Documentation", href: "/docs" },
+      { name: "Whitepapers", href: "/resources" },
       { name: "API Reference", href: "/api" },
     ],
     Company: [
       { name: "About Us", href: "/about" },
       { name: "Careers", href: "/careers" },
       { name: "Contact", href: "/contact" },
-      { name: "Partners", href: "/partners" },
-    ],
-    Legal: [
-      { name: "Privacy Policy", href: "/privacy" },
-      { name: "Terms of Service", href: "/terms" },
-      { name: "Security", href: "/security" },
+      { name: "Get Started", href: "/get-started" },
     ],
   }
 
@@ -39,6 +41,10 @@ export function SiteFooter() {
             <p className="text-sm text-muted-foreground leading-relaxed">
               Enterprise-grade DevOps and managed infrastructure services for modern cloud platforms.
             </p>
+            <div className="mt-4 pt-4 border-t">
+              <div className="text-xs text-muted-foreground">Trusted by 500+ enterprises</div>
+              <div className="text-xs font-mono text-primary mt-1">99.99% uptime SLA</div>
+            </div>
           </div>
 
           {Object.entries(footerLinks).map(([category, links]) => (
@@ -61,13 +67,18 @@ export function SiteFooter() {
         </div>
 
         <div className="pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-muted-foreground">© 2025 TheCloudbox. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">
+            © 2025 TheCloudbox. All rights reserved. <span className="font-mono">$ always-on</span>
+          </p>
           <div className="flex items-center gap-6">
             <Link href="/status" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               System Status
             </Link>
-            <Link href="/support" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Support
+            <Link href="/security" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Security
+            </Link>
+            <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Privacy
             </Link>
           </div>
         </div>

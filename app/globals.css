@@ -18,6 +18,12 @@
   --muted-foreground: oklch(0.48 0 0);
   --accent: oklch(0.55 0.18 200);
   --accent-foreground: oklch(0.98 0 0);
+  /* Added sea green hover color */
+  --sea-green: oklch(0.55 0.12 180);
+  --sea-green-foreground: oklch(0.98 0 0);
+  /* Added blue accent color */
+  --blue-accent: oklch(0.5 0.18 240);
+  --blue-accent-foreground: oklch(0.98 0 0);
   --destructive: oklch(0.55 0.22 25);
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(0.88 0 0);
@@ -54,6 +60,12 @@
   --muted-foreground: oklch(0.62 0 0);
   --accent: oklch(0.6 0.2 200);
   --accent-foreground: oklch(0.08 0 0);
+  /* Dark mode sea green */
+  --sea-green: oklch(0.65 0.14 180);
+  --sea-green-foreground: oklch(0.08 0 0);
+  /* Dark mode blue accent */
+  --blue-accent: oklch(0.6 0.2 240);
+  --blue-accent-foreground: oklch(0.08 0 0);
   --destructive: oklch(0.5 0.2 25);
   --destructive-foreground: oklch(0.95 0 0);
   --border: oklch(0.22 0 0);
@@ -92,6 +104,11 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  /* Added sea green and blue accent to theme */
+  --color-sea-green: var(--sea-green);
+  --color-sea-green-foreground: var(--sea-green-foreground);
+  --color-blue-accent: var(--blue-accent);
+  --color-blue-accent-foreground: var(--blue-accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);

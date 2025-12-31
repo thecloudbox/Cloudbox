@@ -1,0 +1,202 @@
+version: '3.8'
+
+services:
+  # CloudSentinel Core Platform
+  cloudsentinel:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PROMETHEUS_URL=http://prometheus:9090
+      - ALERTMANAGER_URL=http://alertmanager:9093
+    depends_on:
+      - prometheus
+      - grafana
+      - redis
+    networks:
+      - monitoring
+    volumes:
+      - ./config:/app/config
+
+  # Prometheus - Metrics Collection
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/alerts.yml:/etc/prometheus/alerts.yml
+      - prometheus_data:/prometheus
+    networks:
+      - monitoring
+
+  # Grafana - Visualization
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - monitoring
+
+  # AlertManager - Alert Routing
+  alertmanager:
+    image: prom/alertmanager:latest
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager/config.yml:/etc/alertmanager/config.yml
+      - alertmanager_data:/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    networks:
+      - monitoring
+
+  # Redis - Caching & State Management
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - monitoring
+
+  # Sample Microservices for Demo
+  
+  # Frontend Service
+  frontend-service:
+    image: prom/prometheus:latest
+    command: sh -c "while true; do sleep 1; done"
+    ports:
+      - "8001:8000"
+    environment:
+      - SERVICE_NAME=frontend
+    networks:
+      - monitoring
+    labels:
+      monitoring: "true"
+
+  # API Gateway Service
+  api-gateway:
+    image: prom/prometheus:latest
+    command: sh -c "while true; do sleep 1; done"
+    ports:
+      - "8002:8000"
+    environment:
+      - SERVICE_NAME=api-gateway
+    networks:
+      - monitoring
+    labels:
+      monitoring: "true"
+
+  # User Service
+  user-service:
+    image: prom/prometheus:latest
+    command: sh -c "while true; do sleep 1; done"
+    ports:
+      - "8003:8000"
+    environment:
+      - SERVICE_NAME=user-service
+    networks:
+      - monitoring
+    labels:
+      monitoring: "true"
+
+  # Order Service
+  order-service:
+    image: prom/prometheus:latest
+    command: sh -c "while true; do sleep 1; done"
+    ports:
+      - "8004:8000"
+    environment:
+      - SERVICE_NAME=order-service
+    networks:
+      - monitoring
+    labels:
+      monitoring: "true"
+
+  # Payment Service
+  payment-service:
+    image: prom/prometheus:latest
+    command: sh -c "while true; do sleep 1; done"
+    ports:
+      - "8005:8000"
+    environment:
+      - SERVICE_NAME=payment-service
+    networks:
+      - monitoring
+    labels:
+      monitoring: "true"
+
+  # Node Exporter - Host Metrics
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    networks:
+      - monitoring
+
+  # cAdvisor - Container Metrics
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    privileged: true
+    networks:
+      - monitoring
+
+  # Chaos Monkey - Inject Failures for Demo
+  chaos-monkey:
+    build:
+      context: ./chaos-monkey
+    environment:
+      - TARGETS=frontend-service,api-gateway,user-service,order-service,payment-service
+      - FAILURE_RATE=0.1
+      - PROMETHEUS_URL=http://prometheus:9090
+    depends_on:
+      - prometheus
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+  grafana_data:
+  alertmanager_data:
+  redis_data:
