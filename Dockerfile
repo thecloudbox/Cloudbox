@@ -15,13 +15,13 @@ COPY . .
 EXPOSE 3030
 CMD ["npm", "run", "dev"]
 
-# Production dependencies
+# Dependencies stage - install ALL dependencies for building
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci
 
 # Build stage
 FROM base AS builder
@@ -34,6 +34,7 @@ ENV NODE_ENV=production
 
 RUN npm run build
 
+# Production stage with minimal dependencies
 FROM base AS production
 WORKDIR /app
 
@@ -43,11 +44,13 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
+COPY package*.json ./
+RUN npm ci --only=production && npm cache clean --force
+
 COPY --from=builder /app/public ./public
 
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
@@ -56,4 +59,4 @@ EXPOSE 3030
 ENV PORT=3030
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
