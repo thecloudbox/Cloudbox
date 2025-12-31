@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cloudsentinel
+  labels:
+    name: cloudsentinel
+    environment: production

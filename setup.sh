@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# TheCloudbox Setup Script - Local Development
-# This script sets up the local development environment
+# TheCloudbox Setup Script - Complete Setup for All Environments
+# This script sets up local development, Docker, Kubernetes, or Vagrant
 
 set -e  # Exit on error
 
@@ -10,17 +10,21 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
+CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 echo -e "${BLUE}"
 cat << "EOF"
-╔════════════════════════════════════════╗
-║                                        ║
-║         TheCloudbox Setup              ║
-║         Delivering Solutions           ║
-║         Local Development Mode         ║
-║                                        ║
-╚════════════════════════════════════════╝
+╔═══════════════════════════════════════════════════════╗
+║                                                       ║
+║            ╔════════════════════════════╗             ║
+║            ║   TheCloudbox              ║             ║
+║            ║   $ delivering solutions   ║             ║
+║            ╚════════════════════════════╝             ║
+║                                                       ║
+║            Complete Setup & Deployment                ║
+║                                                       ║
+╚═══════════════════════════════════════════════════════╝
 EOF
 echo -e "${NC}"
 
@@ -41,75 +45,217 @@ print_info() {
     echo -e "${BLUE}[i]${NC} $1"
 }
 
-# Check if running as root
-if [ "$EUID" -eq 0 ]; then 
-    print_warning "Please don't run this script as root"
-    exit 1
-fi
+print_header() {
+    echo -e "\n${CYAN}═══════════════════════════════════════${NC}"
+    echo -e "${CYAN}$1${NC}"
+    echo -e "${CYAN}═══════════════════════════════════════${NC}\n"
+}
 
-# Check prerequisites
-print_info "Checking prerequisites..."
+# Main menu
+show_menu() {
+    echo -e "${CYAN}Choose deployment mode:${NC}\n"
+    echo "  1) Local Development (npm)"
+    echo "  2) Docker Compose (Full Stack)"
+    echo "  3) Kubernetes (Production)"
+    echo "  4) Vagrant VM (Testing)"
+    echo "  5) CloudSentinel Demo Setup"
+    echo "  6) Exit"
+    echo ""
+    read -p "Enter choice [1-6]: " choice
+}
 
-# Check Node.js
-if ! command -v node &> /dev/null; then
-    print_error "Node.js is not installed. Please install Node.js 18+ first."
-    exit 1
-fi
-print_message "Node.js found: $(node --version)"
-
-# Check npm
-if ! command -v npm &> /dev/null; then
-    print_error "npm is not installed. Please install npm first."
-    exit 1
-fi
-print_message "npm found: $(npm --version)"
-
-# Install dependencies
-print_info "Installing dependencies..."
-npm install
-print_message "Dependencies installed successfully"
-
-# Create .env.local if it doesn't exist
-if [ ! -f .env.local ]; then
-    print_warning ".env.local file not found. Creating from template..."
-    cat > .env.local << 'ENV_FILE'
-# Application
+# Local development setup
+setup_local() {
+    print_header "LOCAL DEVELOPMENT SETUP"
+    
+    # Check prerequisites
+    print_info "Checking prerequisites..."
+    
+    if ! command -v node &> /dev/null; then
+        print_error "Node.js is not installed. Please install Node.js 20+ first."
+        exit 1
+    fi
+    print_message "Node.js found: $(node --version)"
+    
+    if ! command -v npm &> /dev/null; then
+        print_error "npm is not installed."
+        exit 1
+    fi
+    print_message "npm found: $(npm --version)"
+    
+    # Install dependencies
+    print_info "Installing dependencies..."
+    npm install
+    print_message "Dependencies installed"
+    
+    # Create .env.local
+    if [ ! -f .env.local ]; then
+        print_warning "Creating .env.local file..."
+        cat > .env.local << 'ENV_FILE'
 NODE_ENV=development
 NEXT_PUBLIC_API_URL=http://localhost:3000
-
-# Company Info
 NEXT_PUBLIC_COMPANY_NAME=TheCloudbox
 NEXT_PUBLIC_COMPANY_EMAIL=contact@thecloudbox.com
 NEXT_PUBLIC_COMPANY_PHONE=+1 (555) 123-4567
 ENV_FILE
-    print_message ".env.local file created"
-fi
+        print_message ".env.local created"
+    fi
+    
+    # Build
+    print_info "Building application..."
+    npm run build
+    print_message "Build complete"
+    
+    echo ""
+    print_message "Setup complete! Start with: npm run dev"
+    echo -e "Access at: ${GREEN}http://localhost:3000${NC}"
+}
 
-# Build the application
-print_info "Building the application..."
-npm run build
-print_message "Application built successfully"
+# Docker Compose setup
+setup_docker() {
+    print_header "DOCKER COMPOSE SETUP"
+    
+    if ! command -v docker &> /dev/null; then
+        print_error "Docker is not installed."
+        exit 1
+    fi
+    print_message "Docker found: $(docker --version)"
+    
+    if ! command -v docker-compose &> /dev/null; then
+        print_error "Docker Compose is not installed."
+        exit 1
+    fi
+    print_message "Docker Compose found"
+    
+    print_info "Starting Docker Compose stack..."
+    docker-compose -f docker-compose.prod.yml up -d
+    
+    print_message "Docker stack started!"
+    echo ""
+    echo -e "Services available at:"
+    echo -e "  App:        ${GREEN}http://localhost:3000${NC}"
+    echo -e "  Prometheus: ${GREEN}http://localhost:9090${NC}"
+    echo -e "  Grafana:    ${GREEN}http://localhost:3001${NC} (admin/admin)"
+    echo -e "  Redis:      ${GREEN}localhost:6379${NC}"
+    echo ""
+    echo -e "To view logs: ${YELLOW}docker-compose -f docker-compose.prod.yml logs -f${NC}"
+    echo -e "To stop:      ${YELLOW}docker-compose -f docker-compose.prod.yml down${NC}"
+}
 
-# Display completion message
+# Kubernetes setup
+setup_kubernetes() {
+    print_header "KUBERNETES DEPLOYMENT"
+    
+    if ! command -v kubectl &> /dev/null; then
+        print_error "kubectl is not installed."
+        exit 1
+    fi
+    print_message "kubectl found: $(kubectl version --client --short 2>/dev/null || echo 'installed')"
+    
+    print_info "Creating namespace..."
+    kubectl apply -f k8s/namespace.yaml
+    
+    print_info "Creating ConfigMap..."
+    kubectl apply -f k8s/configmap.yaml
+    
+    print_info "Deploying Redis..."
+    kubectl apply -f k8s/redis-deployment.yaml
+    
+    print_info "Deploying Prometheus..."
+    kubectl apply -f k8s/prometheus-deployment.yaml
+    
+    print_info "Deploying CloudSentinel app..."
+    kubectl apply -f k8s/deployment.yaml
+    kubectl apply -f k8s/service.yaml
+    
+    print_info "Setting up autoscaling..."
+    kubectl apply -f k8s/hpa.yaml
+    
+    print_message "Kubernetes deployment complete!"
+    echo ""
+    echo -e "Check status: ${YELLOW}kubectl get pods -n cloudsentinel${NC}"
+    echo -e "Get service:  ${YELLOW}kubectl get svc -n cloudsentinel${NC}"
+    echo -e "View logs:    ${YELLOW}kubectl logs -f -n cloudsentinel -l app=cloudsentinel${NC}"
+}
+
+# Vagrant setup
+setup_vagrant() {
+    print_header "VAGRANT VM SETUP"
+    
+    if ! command -v vagrant &> /dev/null; then
+        print_error "Vagrant is not installed."
+        exit 1
+    fi
+    print_message "Vagrant found: $(vagrant --version)"
+    
+    print_info "Starting Vagrant VM..."
+    vagrant up
+    
+    print_message "Vagrant VM started!"
+    echo ""
+    echo -e "SSH into VM:  ${YELLOW}vagrant ssh${NC}"
+    echo -e "Then run:     ${YELLOW}cd /vagrant && ./setup.sh${NC}"
+    echo -e "Stop VM:      ${YELLOW}vagrant halt${NC}"
+    echo -e "Destroy VM:   ${YELLOW}vagrant destroy${NC}"
+}
+
+# CloudSentinel demo setup
+setup_cloudsentinel() {
+    print_header "CLOUDSENTINEL DEMO SETUP"
+    
+    print_info "Starting CloudSentinel full stack..."
+    
+    # Start demo environment
+    if [ -d "demo" ]; then
+        cd demo
+        docker-compose up -d
+        cd ..
+        print_message "CloudSentinel demo started!"
+        echo ""
+        echo -e "CloudSentinel: ${GREEN}http://localhost:3000/cloudsentinel${NC}"
+        echo -e "Prometheus:    ${GREEN}http://localhost:9090${NC}"
+        echo -e "Grafana:       ${GREEN}http://localhost:3001${NC} (admin/admin)"
+        echo ""
+        echo -e "Test scenarios available in: ${YELLOW}demo/scenarios/${NC}"
+        echo -e "Run test: ${YELLOW}bash demo/scenarios/high-cpu.sh${NC}"
+    else
+        print_warning "Demo directory not found. Starting main app with CloudSentinel..."
+        npm run dev &
+        sleep 3
+        print_message "CloudSentinel available at: ${GREEN}http://localhost:3000/cloudsentinel${NC}"
+    fi
+}
+
+# Main execution
+show_menu
+
+case $choice in
+    1)
+        setup_local
+        ;;
+    2)
+        setup_docker
+        ;;
+    3)
+        setup_kubernetes
+        ;;
+    4)
+        setup_vagrant
+        ;;
+    5)
+        setup_cloudsentinel
+        ;;
+    6)
+        echo "Exiting..."
+        exit 0
+        ;;
+    *)
+        print_error "Invalid option"
+        exit 1
+        ;;
+esac
+
 echo ""
-echo -e "${GREEN}╔════════════════════════════════════════╗${NC}"
-echo -e "${GREEN}║         Setup Complete! 🎉             ║${NC}"
-echo -e "${GREEN}╚════════════════════════════════════════╝${NC}"
-echo ""
-echo -e "${BLUE}To start development server:${NC}"
-echo -e "  ${YELLOW}npm run dev${NC}"
-echo ""
-echo -e "${BLUE}Or use Docker:${NC}"
-echo -e "  ${YELLOW}docker-compose up${NC}"
-echo ""
-echo -e "${BLUE}Application will be available at:${NC}"
-echo -e "  🌐 ${GREEN}http://localhost:3000${NC}"
-echo ""
-echo -e "${BLUE}Logo options available at:${NC}"
-echo -e "  ${GREEN}http://localhost:3000/1${NC} (Terminal with Cloud Output)"
-echo -e "  ${GREEN}http://localhost:3000/2${NC} (Command Transform)"
-echo -e "  ${GREEN}http://localhost:3000/3${NC} (Container Cube)"
-echo -e "  ${GREEN}http://localhost:3000/4${NC} (Circuit Cloud)"
-echo -e "  ${GREEN}http://localhost:3000/5${NC} (Infrastructure Stack)"
-echo ""
-print_message "Ready to start developing!"
+echo -e "${GREEN}╔═══════════════════════════════════════════════════════╗${NC}"
+echo -e "${GREEN}║                  Setup Complete!                      ║${NC}"
+echo -e "${GREEN}╚═══════════════════════════════════════════════════════╝${NC}"

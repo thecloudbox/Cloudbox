@@ -1,0 +1,210 @@
+version: '3.8'
+
+services:
+  # CloudSentinel Web UI
+  cloudsentinel-web:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: production
+    container_name: cloudsentinel-web
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PROMETHEUS_URL=http://prometheus:9090
+      - GRAFANA_URL=http://grafana:3001
+      - POSTGRES_URL=postgresql://sentinel:sentinel123@postgres:5432/cloudsentinel
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+      - prometheus
+    networks:
+      - cloudsentinel
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: cloudsentinel-db
+    environment:
+      - POSTGRES_DB=cloudsentinel
+      - POSTGRES_USER=sentinel
+      - POSTGRES_PASSWORD=sentinel123
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - cloudsentinel
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sentinel"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: cloudsentinel-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - cloudsentinel
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Prometheus Metrics
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: cloudsentinel-prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/alerts.yml:/etc/prometheus/alerts.yml
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - cloudsentinel
+    restart: unless-stopped
+
+  # Grafana Dashboards
+  grafana:
+    image: grafana/grafana:latest
+    container_name: cloudsentinel-grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_SERVER_HTTP_PORT=3001
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3001:3001"
+    networks:
+      - cloudsentinel
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+
+  # AlertManager
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: cloudsentinel-alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    volumes:
+      - ./alertmanager/config.yml:/etc/alertmanager/config.yml
+      - alertmanager-data:/alertmanager
+    ports:
+      - "9093:9093"
+    networks:
+      - cloudsentinel
+    restart: unless-stopped
+
+  # Node Exporter
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: cloudsentinel-node-exporter
+    command:
+      - '--path.rootfs=/host'
+    volumes:
+      - '/:/host:ro,rslave'
+    ports:
+      - "9100:9100"
+    networks:
+      - cloudsentinel
+    restart: unless-stopped
+
+  # Sample Microservice 1: API Gateway
+  demo-api-gateway:
+    image: prom/prometheus:latest
+    container_name: demo-api-gateway
+    command: 
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "8001:9090"
+    networks:
+      - cloudsentinel
+    restart: unless-stopped
+    labels:
+      service: "api-gateway"
+      environment: "production"
+
+  # Sample Microservice 2: User Service
+  demo-user-service:
+    image: prom/prometheus:latest
+    container_name: demo-user-service
+    command: 
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "8002:9090"
+    networks:
+      - cloudsentinel
+    restart: unless-stopped
+    labels:
+      service: "user-service"
+      environment: "production"
+
+  # Sample Microservice 3: Payment Service
+  demo-payment-service:
+    image: prom/prometheus:latest
+    container_name: demo-payment-service
+    command: 
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "8003:9090"
+    networks:
+      - cloudsentinel
+    restart: unless-stopped
+    labels:
+      service: "payment-service"
+      environment: "production"
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: cloudsentinel-nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - cloudsentinel
+    restart: unless-stopped
+    depends_on:
+      - cloudsentinel-web
+
+networks:
+  cloudsentinel:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:
+  prometheus-data:
+  grafana-data:
+  alertmanager-data:
