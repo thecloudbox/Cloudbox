@@ -1,6 +1,10 @@
 import { AnomalyDetector } from "./anomaly-detector"
 import { LogAnalyzer } from "./log-analyzer"
 import { AutoRemediationEngine } from "./auto-remediation"
+import { NLQueryEngine } from "./nl-query-engine"
+import { CostIntelligenceEngine } from "./cost-intelligence"
+import { BlastRadiusPredictor } from "./blast-radius-predictor"
+import { RunbookGenerator } from "./runbook-generator"
 import type { Metric, LogEntry, Anomaly, Incident, PredictionModel, HealthScore } from "./types"
 
 /**
@@ -11,6 +15,10 @@ export class CloudSentinel {
   private anomalyDetector: AnomalyDetector
   private logAnalyzer: LogAnalyzer
   private remediationEngine: AutoRemediationEngine
+  private nlQueryEngine: NLQueryEngine
+  private costIntelligence: CostIntelligenceEngine
+  private blastRadiusPredictor: BlastRadiusPredictor
+  private runbookGenerator: RunbookGenerator
 
   private detectedAnomalies: Anomaly[] = []
   private incidents: Incident[] = []
@@ -20,6 +28,10 @@ export class CloudSentinel {
     this.anomalyDetector = new AnomalyDetector()
     this.logAnalyzer = new LogAnalyzer()
     this.remediationEngine = new AutoRemediationEngine()
+    this.nlQueryEngine = new NLQueryEngine()
+    this.costIntelligence = new CostIntelligenceEngine()
+    this.blastRadiusPredictor = new BlastRadiusPredictor()
+    this.runbookGenerator = new RunbookGenerator()
   }
 
   /**
@@ -91,6 +103,8 @@ export class CloudSentinel {
    */
   private async handleIncident(incident: Incident) {
     this.incidents.push(incident)
+
+    this.runbookGenerator.learnFromIncident(incident)
 
     // Check if auto-remediation is possible
     if (this.remediationEngine.canAutoRemediate(incident)) {
@@ -187,5 +201,48 @@ export class CloudSentinel {
         prevented: Math.floor(this.preventedIncidents * 0.4),
       },
     ]
+  }
+
+  /**
+   * Ask questions in natural language
+   */
+  async askQuestion(query: string) {
+    this.nlQueryEngine.updateData(this.incidents, this.detectedAnomalies)
+    return await this.nlQueryEngine.processQuery(query)
+  }
+
+  /**
+   * Analyze cost anomalies across clouds
+   */
+  analyzeCosts(metrics: Metric[]) {
+    return this.costIntelligence.analyzeCosts(metrics, this.detectedAnomalies)
+  }
+
+  /**
+   * Get cost savings opportunities
+   */
+  getCostSavings() {
+    return this.costIntelligence.calculateSavingsOpportunity()
+  }
+
+  /**
+   * Predict blast radius for a change
+   */
+  predictBlastRadius(service: string, changeType: "deployment" | "config" | "scaling" | "migration") {
+    return this.blastRadiusPredictor.analyzeChange(service, changeType)
+  }
+
+  /**
+   * Get auto-generated runbooks
+   */
+  getRunbooks() {
+    return this.runbookGenerator.getRunbooks()
+  }
+
+  /**
+   * Get runbook for specific incident
+   */
+  getRunbookForIncident(incident: Incident) {
+    return this.runbookGenerator.getRunbookForIncident(incident)
   }
 }
