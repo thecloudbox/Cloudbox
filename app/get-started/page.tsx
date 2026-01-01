@@ -30,7 +30,7 @@ export default function GetStartedPage() {
         <section className="py-24 bg-gradient-to-br from-primary/5 via-background to-accent/5">
           <div className="container mx-auto px-6">
             <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">Get Started with InfraOps</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">Get Started with TheCloudbox</h1>
               <p className="text-xl text-muted-foreground leading-relaxed">
                 Tell us about your infrastructure needs and we'll create a custom solution tailored to your business.
               </p>

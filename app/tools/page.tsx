@@ -9,6 +9,22 @@ import Link from "next/link"
 export default function ToolsPage() {
   const tools = [
     {
+      name: "CloudSentinel",
+      tagline: "Open-Source AIOps Platform",
+      description:
+        "Revolutionary ML-powered monitoring with natural language queries, cost intelligence, blast radius prediction, and auto-remediation. Features that don't exist in commercial platforms",
+      icon: Activity,
+      features: [
+        "Ask questions in plain English",
+        "Cross-cloud cost correlation",
+        "Blast radius prediction before deploy",
+        "Auto-generated runbooks from incidents",
+      ],
+      status: "Available",
+      category: "AIOps",
+      featured: true,
+    },
+    {
       name: "InfraPredict",
       tagline: "AI-Powered Capacity Planning",
       description:
@@ -157,6 +173,9 @@ export default function ToolsPage() {
             <div className="grid md:grid-cols-2 gap-8">
               {tools.map((tool, index) => {
                 const Icon = tool.icon
+                const toolSlug = tool.name.toLowerCase().replace(/\s+/g, "")
+                const toolPath = tool.name === "CloudSentinel" ? "/cloudsentinel" : `/tools/${toolSlug}`
+
                 return (
                   <Card key={index} className="hover:shadow-lg transition-shadow">
                     <CardHeader>
@@ -202,7 +221,7 @@ export default function ToolsPage() {
                         {tool.status === "Coming Soon" ? (
                           <span>Coming Soon</span>
                         ) : (
-                          <Link href="/contact">{tool.status === "Beta" ? "Request Beta Access" : "Learn More"}</Link>
+                          <Link href={toolPath}>{tool.status === "Beta" ? "Request Beta Access" : "Learn More"}</Link>
                         )}
                       </Button>
                     </CardContent>

@@ -111,8 +111,8 @@ export default function ContactPage() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <a href="mailto:hello@infraops.com" className="text-primary hover:underline">
-                      hello@infraops.com
+                    <a href="mailto:hello@thecloudbox.io" className="text-primary hover:underline">
+                      hello@thecloudbox.io
                     </a>
                     <p className="text-sm text-muted-foreground mt-2">For general inquiries</p>
                   </CardContent>
@@ -126,8 +126,8 @@ export default function ContactPage() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <a href="mailto:support@infraops.com" className="text-primary hover:underline">
-                      support@infraops.com
+                    <a href="mailto:support@thecloudbox.io" className="text-primary hover:underline">
+                      support@thecloudbox.io
                     </a>
                     <p className="text-sm text-muted-foreground mt-2">24/7 technical support</p>
                   </CardContent>
@@ -141,10 +141,10 @@ export default function ContactPage() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <a href="tel:+18885551234" className="text-primary hover:underline">
-                      +1 (888) 555-1234
+                    <a href="tel:+919870239829" className="text-primary hover:underline">
+                      +91 98702 39829
                     </a>
-                    <p className="text-sm text-muted-foreground mt-2">Mon-Fri, 9AM-6PM EST</p>
+                    <p className="text-sm text-muted-foreground mt-2">Mon-Fri, 9AM-6PM IST</p>
                   </CardContent>
                 </Card>
 
@@ -157,11 +157,11 @@ export default function ContactPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      123 Cloud Street
+                      2nd floor 146-147, Sector 63
                       <br />
-                      San Francisco, CA 94105
+                      Noida 201301
                       <br />
-                      United States
+                      India
                     </p>
                   </CardContent>
                 </Card>
@@ -176,8 +176,8 @@ export default function ContactPage() {
             <h3 className="text-xl font-semibold mb-2">Need Urgent Support?</h3>
             <p className="text-muted-foreground mb-4">
               For production emergencies, contact our 24/7 NOC immediately at{" "}
-              <a href="tel:+18885559999" className="text-destructive font-semibold hover:underline">
-                +1 (888) 555-9999
+              <a href="tel:+919870239829" className="text-destructive font-semibold hover:underline">
+                +91 98702 39829
               </a>
             </p>
           </div>
