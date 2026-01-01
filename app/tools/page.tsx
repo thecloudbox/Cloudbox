@@ -214,6 +214,7 @@ export default function ToolsPage() {
                       </div>
                       <Button
                         variant={tool.status === "Available" ? "default" : "outline"}
+                        size="sm"
                         className="w-full"
                         disabled={tool.status === "Coming Soon"}
                         asChild={tool.status !== "Coming Soon"}

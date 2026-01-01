@@ -5,6 +5,7 @@ import { NLQueryInterface } from "@/components/cloudsentinel/nl-query"
 import { CostIntelligence } from "@/components/cloudsentinel/cost-intelligence"
 import { BlastRadiusAnalyzer } from "@/components/cloudsentinel/blast-radius"
 import { RunbookManager } from "@/components/cloudsentinel/runbook-manager"
+import { CXOCostDashboard } from "@/components/cloudsentinel/cxo-cost-dashboard"
 
 export default function CloudSentinelPage() {
   return (
@@ -21,6 +22,9 @@ export default function CloudSentinelPage() {
               </TabsTrigger>
               <TabsTrigger value="cost" className="data-[state=active]:text-sea-green">
                 Cost Intelligence
+              </TabsTrigger>
+              <TabsTrigger value="cxo-costs" className="data-[state=active]:text-sea-green">
+                CXO Cost Analytics
               </TabsTrigger>
               <TabsTrigger value="blast-radius" className="data-[state=active]:text-sea-green">
                 Blast Radius
@@ -42,6 +46,10 @@ export default function CloudSentinelPage() {
 
         <TabsContent value="cost" className="mt-0">
           <CostIntelligence />
+        </TabsContent>
+
+        <TabsContent value="cxo-costs" className="mt-0">
+          <CXOCostDashboard />
         </TabsContent>
 
         <TabsContent value="blast-radius" className="mt-0">
