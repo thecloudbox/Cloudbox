@@ -87,7 +87,7 @@ The transition from DevOps to AIOps is inevitable for organizations operating at
 
 Remember that AIOps is a journey, not a destination. Begin with focused use cases, measure results, iterate based on learning, and gradually expand. The teams that embrace AI-powered operations today will have significant competitive advantages in reliability, efficiency, and innovation velocity tomorrow.`,
     category: "AIOps",
-    author: { name: "Sarah Chen", role: "Principal DevOps Engineer" },
+    author: { name: "Rajesh Kumar", role: "Principal DevOps Engineer" },
     date: "2024-12-15",
     readTime: "15 min read",
     tags: ["AIOps", "DevOps", "ML", "Automation"],
@@ -102,10 +102,10 @@ Remember that AIOps is a journey, not a destination. Begin with focused use case
   },
   {
     id: "2",
-    title: "Kafka Performance Tuning: A Production Guide",
-    slug: "kafka-performance-tuning-guide",
+    title: "Apache Kafka Performance Tuning: Production Best Practices",
+    slug: "kafka-performance-tuning",
     excerpt:
-      "Deep dive into advanced Kafka configurations, partition strategies, and replication settings to achieve maximum throughput in production environments.",
+      "Deep dive into optimizing Kafka clusters for high throughput, low latency, and reliability at scale with real-world examples.",
     content: `Apache Kafka has become the de facto standard for building real-time data pipelines and streaming applications. Companies like LinkedIn, Netflix, Uber, and Airbnb process trillions of messages daily through Kafka. However, achieving optimal performance, throughput, and reliability requires deep understanding and careful tuning of numerous configuration parameters.
 
 This comprehensive guide distills years of production experience running Kafka clusters at scale, covering everything from producer optimization to broker configuration, consumer tuning, and operational best practices. Whether you're processing thousands or millions of messages per second, these insights will help you maximize Kafka performance while maintaining reliability.
@@ -221,16 +221,16 @@ This configuration achieves 100K+ messages/sec per partition while maintaining l
 ## Conclusion
 
 Kafka performance tuning is an iterative process. Start with baseline configurations, measure performance, identify bottlenecks, adjust parameters, and repeat. Focus on the most impactful settings first: producer batching, broker threads, and partition count. Monitor continuously and tune based on real-world behavior. With proper configuration and infrastructure, Kafka can handle millions of messages per second with millisecond latency, powering real-time applications at massive scale.`,
-    category: "Kafka",
-    author: { name: "Michael Rodriguez", role: "Data Platform Lead" },
-    date: "2024-11-28",
-    readTime: "18 min read",
-    tags: ["Kafka", "Performance", "Streaming", "Architecture"],
+    category: "Infrastructure",
+    author: { name: "Priya Sharma", role: "Senior Infrastructure Architect" },
+    date: "2024-12-10",
+    readTime: "12 min read",
+    tags: ["Kafka", "Performance", "Distributed Systems"],
     image: "/apache-kafka-cluster-architecture-diagram.jpg",
     sections: [
       {
-        heading: "Kafka Architecture",
-        content: "Understanding producers, brokers, and consumers",
+        heading: "Producer Optimization",
+        content: "Configure batching, compression, and acknowledgment settings for optimal throughput",
         image: "/kafka-producer-consumer-architecture.jpg",
       },
     ],

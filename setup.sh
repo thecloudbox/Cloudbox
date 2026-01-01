@@ -59,9 +59,10 @@ show_menu() {
     echo "  3) Kubernetes (Production)"
     echo "  4) Vagrant VM (Testing)"
     echo "  5) CloudSentinel Demo Setup"
-    echo "  6) Exit"
+    echo "  6) Clean Rebuild (Remove cache & volumes)"
+    echo "  7) Exit"
     echo ""
-    read -p "Enter choice [1-6]: " choice
+    read -p "Enter choice [1-7]: " choice
 }
 
 # Local development setup
@@ -226,6 +227,66 @@ setup_cloudsentinel() {
     fi
 }
 
+# Clean rebuild function
+clean_rebuild() {
+    print_header "CLEAN REBUILD - REMOVING CLOUDBOX CACHE & VOLUMES"
+    
+    print_warning "This will stop CloudBox containers, remove CloudBox volumes, and clear build caches!"
+    read -p "Are you sure? (yes/no): " confirm
+    
+    if [ "$confirm" != "yes" ]; then
+        print_info "Cancelled."
+        exit 0
+    fi
+    
+    print_info "Stopping CloudBox Docker containers..."
+    docker-compose down -v 2>/dev/null || true
+    docker-compose -f docker-compose.prod.yml down -v 2>/dev/null || true
+    docker-compose -f cloudsentinel-docker-compose.yml down -v 2>/dev/null || true
+    if [ -d "demo" ]; then
+        cd demo && docker-compose down -v 2>/dev/null || true && cd ..
+    fi
+    if [ -d "cloudsentinel-deploy" ]; then
+        cd cloudsentinel-deploy && docker-compose -f docker-compose.prod.yml down -v 2>/dev/null || true && cd ..
+    fi
+    print_message "CloudBox containers stopped and volumes removed"
+    
+    print_info "Removing CloudBox Docker images..."
+    docker images | grep -E 'cloudbox|cloudsentinel' | awk '{print $3}' | xargs -r docker rmi -f 2>/dev/null || true
+    print_message "CloudBox images removed"
+    
+    # Remove Next.js build cache
+    print_info "Removing Next.js build cache..."
+    rm -rf .next
+    rm -rf node_modules/.cache
+    rm -rf .turbo
+    print_message "Build cache removed"
+    
+    print_info "Cleaning up CloudBox dangling resources..."
+    docker volume ls -qf dangling=true -f name=cloudbox | xargs -r docker volume rm 2>/dev/null || true
+    docker volume ls -qf dangling=true -f name=cloudsentinel | xargs -r docker volume rm 2>/dev/null || true
+    print_message "Dangling volumes cleaned"
+    
+    # Rebuild everything
+    print_info "Rebuilding CloudBox Docker images (no cache)..."
+    docker-compose -f docker-compose.prod.yml build --no-cache
+    print_message "Images rebuilt"
+    
+    # Start containers
+    print_info "Starting CloudBox containers..."
+    docker-compose -f docker-compose.prod.yml up -d
+    print_message "Containers started"
+    
+    echo ""
+    print_message "Clean rebuild complete!"
+    echo ""
+    echo -e "Services available at:"
+    echo -e "  Website:        ${GREEN}http://localhost:3030${NC}"
+    echo -e "  CloudSentinel:  ${GREEN}http://localhost:3030/cloudsentinel${NC}"
+    echo ""
+    echo -e "To view logs: ${YELLOW}docker-compose -f docker-compose.prod.yml logs -f${NC}"
+}
+
 # Main execution
 show_menu
 
@@ -246,6 +307,9 @@ case $choice in
         setup_cloudsentinel
         ;;
     6)
+        clean_rebuild
+        ;;
+    7)
         echo "Exiting..."
         exit 0
         ;;

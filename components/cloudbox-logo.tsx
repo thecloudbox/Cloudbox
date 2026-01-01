@@ -15,197 +15,107 @@ export function CloudboxLogo({ className = "", interactive = false }: { classNam
       xmlns="http://www.w3.org/2000/svg"
       className="transition-all duration-300"
     >
-      <circle
-        cx="12"
-        cy="10"
-        r="1.5"
-        className={`animate-pulse transition-colors duration-300 ${hoveredBlock ? "fill-green-500" : "fill-primary"}`}
-        style={{ opacity: 0.6 }}
-      />
-      <circle
-        cx="36"
-        cy="12"
-        r="1"
-        className={`animate-pulse transition-colors duration-300 ${hoveredBlock ? "fill-green-500" : "fill-primary"}`}
-        style={{ opacity: 0.4, animationDelay: "0.5s" }}
-      />
-      <circle
-        cx="38"
-        cy="28"
-        r="1.5"
-        className={`animate-pulse transition-colors duration-300 ${hoveredBlock ? "fill-green-500" : "fill-primary"}`}
-        style={{ opacity: 0.5, animationDelay: "1s" }}
-      />
-      <circle
-        cx="10"
-        cy="32"
-        r="1"
-        className={`animate-pulse transition-colors duration-300 ${hoveredBlock ? "fill-green-500" : "fill-primary"}`}
-        style={{ opacity: 0.4, animationDelay: "1.5s" }}
-      />
-
-      <path
-        d="M8 18 L4 14"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        className={`transition-colors duration-300 ${hoveredBlock ? "text-green-500" : "text-primary"}`}
-        style={{ opacity: 0.3 }}
-      />
-      <path
-        d="M10 36 L6 40"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        className={`transition-colors duration-300 ${hoveredBlock ? "text-green-500" : "text-primary"}`}
-        style={{ opacity: 0.3 }}
-      />
-      <path
-        d="M38 18 L42 14"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        className={`transition-colors duration-300 ${hoveredBlock ? "text-green-500" : "text-primary"}`}
-        style={{ opacity: 0.3 }}
-      />
-      <path
-        d="M36 36 L40 40"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        className={`transition-colors duration-300 ${hoveredBlock ? "text-green-500" : "text-primary"}`}
-        style={{ opacity: 0.3 }}
-      />
-
+      {/* Terminal window background */}
       <rect
-        x="10"
-        y="14"
-        width="28"
-        height="28"
-        rx="3"
-        className={`transition-all duration-300 ${hoveredBlock === "main" || !interactive ? "fill-primary" : "fill-primary"} ${hoveredBlock === "main" ? "fill-green-500" : ""}`}
-        style={{ opacity: 0.9 }}
-        onMouseEnter={() => interactive && setHoveredBlock("main")}
-        onMouseLeave={() => interactive && setHoveredBlock(null)}
+        x="6"
+        y="10"
+        width="36"
+        height="30"
+        rx="4"
+        className={`transition-colors duration-300 ${hoveredBlock ? "fill-zinc-900" : "fill-zinc-800"}`}
       />
 
-      <path
-        d="M10 17 L6 20 L6 44 L10 42 Z"
-        className={`transition-colors duration-300 ${hoveredBlock === "main" ? "fill-green-500" : "fill-primary"}`}
-        style={{ opacity: 0.6 }}
-      />
-
-      <path
-        d="M10 42 L6 44 L30 44 L38 42 Z"
-        className={`transition-colors duration-300 ${hoveredBlock === "main" ? "fill-green-500" : "fill-primary"}`}
-        style={{ opacity: 0.7 }}
-      />
-
+      {/* Terminal title bar */}
       <rect
-        x="10"
-        y="14"
-        width="28"
+        x="6"
+        y="10"
+        width="36"
         height="6"
-        rx="3"
-        className={`transition-all duration-300 ${hoveredBlock === "lid" ? "fill-green-500" : "fill-primary"}`}
-        onMouseEnter={() => interactive && setHoveredBlock("lid")}
-        onMouseLeave={() => interactive && setHoveredBlock(null)}
+        rx="4"
+        className={`transition-colors duration-300 ${hoveredBlock ? "fill-zinc-800" : "fill-zinc-700"}`}
       />
 
-      <g style={{ opacity: 0.8 }} className="transition-opacity duration-300 group-hover:opacity-100">
-        <text
-          x="14"
-          y="26"
-          className={`font-mono text-[8px] transition-colors duration-300 ${hoveredBlock === "code" ? "fill-green-200" : "fill-primary-foreground"}`}
-          onMouseEnter={() => interactive && setHoveredBlock("code")}
-          onMouseLeave={() => interactive && setHoveredBlock(null)}
-        >
-          {"<>"}
-        </text>
-        <text
-          x="28"
-          y="26"
-          className={`font-mono text-[8px] transition-colors duration-300 ${hoveredBlock === "iac" ? "fill-green-200" : "fill-primary-foreground"}`}
-          onMouseEnter={() => interactive && setHoveredBlock("iac")}
-          onMouseLeave={() => interactive && setHoveredBlock(null)}
-        >
-          {"{ }"}
-        </text>
+      {/* Terminal control dots (red, yellow, green) */}
+      <circle cx="11" cy="13" r="1.5" className="fill-red-500" />
+      <circle cx="16" cy="13" r="1.5" className="fill-yellow-500" />
+      <circle cx="21" cy="13" r="1.5" className="fill-green-500" />
 
-        <text
-          x="14"
-          y="32"
-          className={`font-mono text-[7px] transition-colors duration-300 ${hoveredBlock === "terminal" ? "fill-green-200" : "fill-primary-foreground"}`}
-          onMouseEnter={() => interactive && setHoveredBlock("terminal")}
-          onMouseLeave={() => interactive && setHoveredBlock(null)}
-        >
-          $_
-        </text>
+      {/* Terminal prompt and cursor */}
+      <text
+        x="10"
+        y="25"
+        className={`font-mono text-[7px] transition-colors duration-300 ${hoveredBlock ? "fill-terminal-green" : "fill-terminal-green"}`}
+        style={{ fontWeight: "bold" }}
+      >
+        $
+      </text>
 
-        <path
-          d="M28 30c0-.8.6-1.5 1.5-1.5.5 0 .9.3 1.2.7.1-.1.3-.1.5-.1.7 0 1.3.6 1.3 1.3s-.6 1.3-1.3 1.3h-3.2c-.7 0-1.3-.6-1.3-1.3s.6-1.2 1.3-1.4z"
-          className={`transition-colors duration-300 ${hoveredBlock === "cloud" ? "fill-green-200" : "fill-primary-foreground"}`}
-          style={{ opacity: 0.7 }}
-          onMouseEnter={() => interactive && setHoveredBlock("cloud")}
-          onMouseLeave={() => interactive && setHoveredBlock(null)}
-        />
-
-        <g
-          className="transition-colors duration-300"
-          onMouseEnter={() => interactive && setHoveredBlock("database")}
-          onMouseLeave={() => interactive && setHoveredBlock(null)}
-        >
-          <ellipse
-            cx="24"
-            cy="36"
-            rx="4"
-            ry="1.5"
-            className={hoveredBlock === "database" ? "fill-green-200" : "fill-primary-foreground"}
-            style={{ opacity: 0.6 }}
-          />
-          <rect
-            x="20"
-            y="36"
-            width="8"
-            height="3"
-            className={hoveredBlock === "database" ? "fill-green-200" : "fill-primary-foreground"}
-            style={{ opacity: 0.6 }}
-          />
-          <ellipse
-            cx="24"
-            cy="39"
-            rx="4"
-            ry="1.5"
-            className={hoveredBlock === "database" ? "fill-green-200" : "fill-primary-foreground"}
-            style={{ opacity: 0.6 }}
-          />
-        </g>
-      </g>
-
-      <path
-        d="M24 14 L24 8"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        className={`transition-colors duration-300 ${hoveredBlock ? "text-green-500" : "text-primary"}`}
-        style={{ opacity: 0.2 }}
+      {/* Blinking cursor */}
+      <rect
+        x="14"
+        y="20"
+        width="2"
+        height="6"
+        className={`transition-colors duration-300 ${hoveredBlock ? "fill-terminal-green" : "fill-terminal-green"}`}
+        style={{ animation: "blink 1s step-end infinite" }}
       />
+
+      {/* Terminal output - tech symbols */}
+      <text
+        x="10"
+        y="32"
+        className={`font-mono text-[6px] transition-colors duration-300 ${hoveredBlock ? "fill-terminal-yellow" : "fill-muted-foreground"}`}
+      >
+        {"{ cloud: 'ready' }"}
+      </text>
+
+      {/* Cloud icon in terminal */}
       <path
-        d="M24 14 L20 10"
+        d="M26 30c0-.8.6-1.5 1.5-1.5.5 0 .9.3 1.2.7.1-.1.3-.1.5-.1.7 0 1.3.6 1.3 1.3s-.6 1.3-1.3 1.3h-3.2c-.7 0-1.3-.6-1.3-1.3s.6-1.2 1.3-1.4z"
+        className={`transition-colors duration-300 ${hoveredBlock ? "fill-terminal-green" : "fill-primary"}`}
+      />
+
+      {/* Light rays/effects */}
+      <path
+        d="M24 10 L24 6"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
-        className={`transition-colors duration-300 ${hoveredBlock ? "text-green-500" : "text-primary"}`}
-        style={{ opacity: 0.15 }}
+        className={`transition-colors duration-300 ${hoveredBlock ? "text-terminal-green" : "text-primary"}`}
+        style={{ opacity: 0.3 }}
       />
       <path
-        d="M24 14 L28 10"
+        d="M10 24 L6 24"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
-        className={`transition-colors duration-300 ${hoveredBlock ? "text-green-500" : "text-primary"}`}
-        style={{ opacity: 0.15 }}
+        className={`transition-colors duration-300 ${hoveredBlock ? "text-terminal-green" : "text-primary"}`}
+        style={{ opacity: 0.3 }}
       />
+      <path
+        d="M38 24 L42 24"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        className={`transition-colors duration-300 ${hoveredBlock ? "text-terminal-green" : "text-primary"}`}
+        style={{ opacity: 0.3 }}
+      />
+      <path
+        d="M24 40 L24 44"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        className={`transition-colors duration-300 ${hoveredBlock ? "text-terminal-green" : "text-primary"}`}
+        style={{ opacity: 0.3 }}
+      />
+
+      {/* Add keyframe animation for blinking cursor */}
+      <style>{`
+        @keyframes blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
+        }
+      `}</style>
     </svg>
   )
 
@@ -238,22 +148,6 @@ export function CloudboxLogo({ className = "", interactive = false }: { classNam
                     className="absolute -bottom-1 -left-1 w-1 h-1 bg-terminal-green rounded-full animate-ping"
                     style={{ animationDelay: "0.2s" }}
                   />
-                  <span
-                    className="absolute -bottom-2 right-1/4 w-0.5 h-0.5 bg-terminal-yellow rounded-full animate-pulse"
-                    style={{ animationDelay: "0.3s" }}
-                  />
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[8px] text-terminal-green animate-bounce">
-                    {"<>"}
-                  </span>
-                  <span className="absolute -right-4 top-1/2 -translate-y-1/2 text-[8px] text-terminal-yellow animate-pulse font-mono font-bold">
-                    $
-                  </span>
-                  <span
-                    className="absolute -bottom-3 left-1/4 text-[8px] text-terminal-green animate-bounce"
-                    style={{ animationDelay: "0.2s" }}
-                  >
-                    ☁
-                  </span>
                 </>
               )}
             </span>
@@ -288,173 +182,107 @@ export function CloudboxLogoCompact({ className = "" }: { className?: string }) 
         xmlns="http://www.w3.org/2000/svg"
         className="transition-all duration-300"
       >
-        <circle
-          cx="12"
-          cy="10"
-          r="1.5"
-          className={`animate-pulse transition-colors duration-300 ${isHovered ? "fill-green-500" : "fill-primary"}`}
-          style={{ opacity: 0.6 }}
-        />
-        <circle
-          cx="36"
-          cy="12"
-          r="1"
-          className={`animate-pulse transition-colors duration-300 ${isHovered ? "fill-green-500" : "fill-primary"}`}
-          style={{ opacity: 0.4, animationDelay: "0.5s" }}
-        />
-        <circle
-          cx="38"
-          cy="28"
-          r="1.5"
-          className={`animate-pulse transition-colors duration-300 ${isHovered ? "fill-green-500" : "fill-primary"}`}
-          style={{ opacity: 0.5, animationDelay: "1s" }}
-        />
-        <circle
-          cx="10"
-          cy="32"
-          r="1"
-          className={`animate-pulse transition-colors duration-300 ${isHovered ? "fill-green-500" : "fill-primary"}`}
-          style={{ opacity: 0.4, animationDelay: "1.5s" }}
+        {/* Terminal window background */}
+        <rect
+          x="6"
+          y="10"
+          width="36"
+          height="30"
+          rx="4"
+          className={`transition-colors duration-300 ${isHovered ? "fill-zinc-900" : "fill-zinc-800"}`}
         />
 
-        <path
-          d="M8 18 L4 14"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          className={`transition-colors duration-300 ${isHovered ? "text-green-500" : "text-primary"}`}
-          style={{ opacity: 0.3 }}
-        />
-        <path
-          d="M10 36 L6 40"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          className={`transition-colors duration-300 ${isHovered ? "text-green-500" : "text-primary"}`}
-          style={{ opacity: 0.3 }}
-        />
-        <path
-          d="M38 18 L42 14"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          className={`transition-colors duration-300 ${isHovered ? "text-green-500" : "text-primary"}`}
-          style={{ opacity: 0.3 }}
-        />
-        <path
-          d="M36 36 L40 40"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          className={`transition-colors duration-300 ${isHovered ? "text-green-500" : "text-primary"}`}
-          style={{ opacity: 0.3 }}
-        />
-
+        {/* Terminal title bar */}
         <rect
-          x="10"
-          y="14"
-          width="28"
-          height="28"
-          rx="3"
-          className={`transition-colors duration-300 ${isHovered ? "fill-green-500" : "fill-primary"}`}
-          style={{ opacity: 0.9 }}
-        />
-        <path
-          d="M10 17 L6 20 L6 44 L10 42 Z"
-          className={`transition-colors duration-300 ${isHovered ? "fill-green-500" : "fill-primary"}`}
-          style={{ opacity: 0.6 }}
-        />
-        <path
-          d="M10 42 L6 44 L30 44 L38 42 Z"
-          className={`transition-colors duration-300 ${isHovered ? "fill-green-500" : "fill-primary"}`}
-          style={{ opacity: 0.7 }}
-        />
-        <rect
-          x="10"
-          y="14"
-          width="28"
+          x="6"
+          y="10"
+          width="36"
           height="6"
-          rx="3"
-          className={`transition-colors duration-300 ${isHovered ? "fill-green-500" : "fill-primary"}`}
+          rx="4"
+          className={`transition-colors duration-300 ${isHovered ? "fill-zinc-800" : "fill-zinc-700"}`}
         />
 
-        <g style={{ opacity: 0.8 }}>
-          <text
-            x="14"
-            y="26"
-            className={`font-mono text-[8px] transition-colors duration-300 ${isHovered ? "fill-green-200" : "fill-primary-foreground"}`}
-          >
-            {"<>"}
-          </text>
-          <text
-            x="28"
-            y="26"
-            className={`font-mono text-[8px] transition-colors duration-300 ${isHovered ? "fill-green-200" : "fill-primary-foreground"}`}
-          >
-            {"{ }"}
-          </text>
-          <text
-            x="14"
-            y="32"
-            className={`font-mono text-[7px] transition-colors duration-300 ${isHovered ? "fill-green-200" : "fill-primary-foreground"}`}
-          >
-            $_
-          </text>
-          <path
-            d="M28 30c0-.8.6-1.5 1.5-1.5.5 0 .9.3 1.2.7.1-.1.3-.1.5-.1.7 0 1.3.6 1.3 1.3s-.6 1.3-1.3 1.3h-3.2c-.7 0-1.3-.6-1.3-1.3s.6-1.2 1.3-1.4z"
-            className={`transition-colors duration-300 ${isHovered ? "fill-green-200" : "fill-primary-foreground"}`}
-            style={{ opacity: 0.7 }}
-          />
-          <ellipse
-            cx="24"
-            cy="36"
-            rx="4"
-            ry="1.5"
-            className={`transition-colors duration-300 ${isHovered ? "fill-green-200" : "fill-primary-foreground"}`}
-            style={{ opacity: 0.6 }}
-          />
-          <rect
-            x="20"
-            y="36"
-            width="8"
-            height="3"
-            className={`transition-colors duration-300 ${isHovered ? "fill-green-200" : "fill-primary-foreground"}`}
-            style={{ opacity: 0.6 }}
-          />
-          <ellipse
-            cx="24"
-            cy="39"
-            rx="4"
-            ry="1.5"
-            className={`transition-colors duration-300 ${isHovered ? "fill-green-200" : "fill-primary-foreground"}`}
-            style={{ opacity: 0.6 }}
-          />
-        </g>
+        {/* Terminal control dots (red, yellow, green) */}
+        <circle cx="11" cy="13" r="1.5" className="fill-red-500" />
+        <circle cx="16" cy="13" r="1.5" className="fill-yellow-500" />
+        <circle cx="21" cy="13" r="1.5" className="fill-green-500" />
 
-        <path
-          d="M24 14 L24 8"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          className={`transition-colors duration-300 ${isHovered ? "text-green-500" : "text-primary"}`}
-          style={{ opacity: 0.2 }}
+        {/* Terminal prompt and cursor */}
+        <text
+          x="10"
+          y="25"
+          className={`font-mono text-[7px] transition-colors duration-300 ${isHovered ? "fill-terminal-green" : "fill-terminal-green"}`}
+          style={{ fontWeight: "bold" }}
+        >
+          $
+        </text>
+
+        {/* Blinking cursor */}
+        <rect
+          x="14"
+          y="20"
+          width="2"
+          height="6"
+          className={`transition-colors duration-300 ${isHovered ? "fill-terminal-green" : "fill-terminal-green"}`}
+          style={{ animation: "blink 1s step-end infinite" }}
         />
+
+        {/* Terminal output - tech symbols */}
+        <text
+          x="10"
+          y="32"
+          className={`font-mono text-[6px] transition-colors duration-300 ${isHovered ? "fill-terminal-yellow" : "fill-muted-foreground"}`}
+        >
+          {"{ cloud: 'ready' }"}
+        </text>
+
+        {/* Cloud icon in terminal */}
         <path
-          d="M24 14 L20 10"
+          d="M26 30c0-.8.6-1.5 1.5-1.5.5 0 .9.3 1.2.7.1-.1.3-.1.5-.1.7 0 1.3.6 1.3 1.3s-.6 1.3-1.3 1.3h-3.2c-.7 0-1.3-.6-1.3-1.3s.6-1.2 1.3-1.4z"
+          className={`transition-colors duration-300 ${isHovered ? "fill-terminal-green" : "fill-primary"}`}
+        />
+
+        {/* Light rays/effects */}
+        <path
+          d="M24 10 L24 6"
           stroke="currentColor"
           strokeWidth="1.5"
           strokeLinecap="round"
-          className={`transition-colors duration-300 ${isHovered ? "text-green-500" : "text-primary"}`}
-          style={{ opacity: 0.15 }}
+          className={`transition-colors duration-300 ${isHovered ? "text-terminal-green" : "text-primary"}`}
+          style={{ opacity: 0.3 }}
         />
         <path
-          d="M24 14 L28 10"
+          d="M10 24 L6 24"
           stroke="currentColor"
           strokeWidth="1.5"
           strokeLinecap="round"
-          className={`transition-colors duration-300 ${isHovered ? "text-green-500" : "text-primary"}`}
-          style={{ opacity: 0.15 }}
+          className={`transition-colors duration-300 ${isHovered ? "text-terminal-green" : "text-primary"}`}
+          style={{ opacity: 0.3 }}
         />
+        <path
+          d="M38 24 L42 24"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          className={`transition-colors duration-300 ${isHovered ? "text-terminal-green" : "text-primary"}`}
+          style={{ opacity: 0.3 }}
+        />
+        <path
+          d="M24 40 L24 44"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          className={`transition-colors duration-300 ${isHovered ? "text-terminal-green" : "text-primary"}`}
+          style={{ opacity: 0.3 }}
+        />
+
+        {/* Add keyframe animation for blinking cursor */}
+        <style>{`
+          @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+          }
+        `}</style>
       </svg>
       <span className="font-bold text-lg tracking-tight">
         The
