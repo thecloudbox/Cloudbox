@@ -7,10 +7,10 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3030:3030"
     environment:
       - NODE_ENV=production
-      - NEXT_PUBLIC_API_URL=http://localhost:3000
+      - NEXT_PUBLIC_API_URL=http://localhost:3030
       - PROMETHEUS_URL=http://prometheus:9090
       - GRAFANA_URL=http://grafana:3000
     depends_on:
@@ -78,7 +78,7 @@ services:
   redis:
     image: redis:7.2-alpine
     ports:
-      - "6379:6379"
+      - "6380:6379"
     command: redis-server --appendonly yes --requirepass cloudsentinel123
     volumes:
       - redis_data:/data
@@ -95,7 +95,7 @@ services:
   postgres:
     image: postgres:16-alpine
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       - POSTGRES_DB=cloudsentinel
       - POSTGRES_USER=cloudsentinel
@@ -134,7 +134,7 @@ services:
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.47.2
     ports:
-      - "8080:8080"
+      - "8084:8080"
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
