@@ -216,7 +216,7 @@ export function CloudboxLogo({ className = "", interactive = false }: { classNam
       </div>
       <div className="flex flex-col leading-none">
         <span className="font-bold text-xl tracking-tight">
-          The<span className="text-primary group-hover:text-green-500 transition-colors duration-300">Cloud</span>
+          The<span className="text-primary group-hover:text-terminal-green transition-colors duration-300">Cloud</span>
           <span
             className="relative inline-block cursor-pointer transition-all duration-300"
             onMouseEnter={() => setIsBoxHovered(true)}
@@ -225,31 +225,31 @@ export function CloudboxLogo({ className = "", interactive = false }: { classNam
             <span
               className={`relative inline-block px-2 py-0.5 border-2 rounded transition-all duration-300 ${
                 isBoxHovered
-                  ? "border-green-500 text-green-500 shadow-lg shadow-green-500/50"
+                  ? "border-terminal-green text-terminal-green shadow-lg shadow-terminal-green/50"
                   : "border-primary text-foreground"
               }`}
             >
               box
               {isBoxHovered && (
                 <>
-                  <span className="absolute -top-1 -right-1 w-1 h-1 bg-green-500 rounded-full animate-ping" />
-                  <span className="absolute -top-2 left-1/4 w-0.5 h-0.5 bg-green-400 rounded-full animate-pulse" />
+                  <span className="absolute -top-1 -right-1 w-1 h-1 bg-terminal-green rounded-full animate-ping" />
+                  <span className="absolute -top-2 left-1/4 w-0.5 h-0.5 bg-terminal-yellow rounded-full animate-pulse" />
                   <span
-                    className="absolute -bottom-1 -left-1 w-1 h-1 bg-green-500 rounded-full animate-ping"
+                    className="absolute -bottom-1 -left-1 w-1 h-1 bg-terminal-green rounded-full animate-ping"
                     style={{ animationDelay: "0.2s" }}
                   />
                   <span
-                    className="absolute -bottom-2 right-1/4 w-0.5 h-0.5 bg-green-400 rounded-full animate-pulse"
+                    className="absolute -bottom-2 right-1/4 w-0.5 h-0.5 bg-terminal-yellow rounded-full animate-pulse"
                     style={{ animationDelay: "0.3s" }}
                   />
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[8px] text-green-500 animate-bounce">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[8px] text-terminal-green animate-bounce">
                     {"<>"}
                   </span>
-                  <span className="absolute -right-4 top-1/2 -translate-y-1/2 text-[8px] text-green-500 animate-pulse">
+                  <span className="absolute -right-4 top-1/2 -translate-y-1/2 text-[8px] text-terminal-yellow animate-pulse font-mono font-bold">
                     $
                   </span>
                   <span
-                    className="absolute -bottom-3 left-1/4 text-[8px] text-green-500 animate-bounce"
+                    className="absolute -bottom-3 left-1/4 text-[8px] text-terminal-green animate-bounce"
                     style={{ animationDelay: "0.2s" }}
                   >
                     ☁
@@ -260,8 +260,10 @@ export function CloudboxLogo({ className = "", interactive = false }: { classNam
           </span>
         </span>
         <span className="text-xs text-muted-foreground font-mono mt-0.5">
-          <span className="text-primary group-hover:text-green-500 transition-colors duration-300">$</span> delivering
-          solutions
+          <span className="text-terminal-green group-hover:text-terminal-yellow transition-colors duration-300 font-bold">
+            $
+          </span>{" "}
+          delivering solutions
         </span>
       </div>
     </div>
@@ -456,7 +458,9 @@ export function CloudboxLogoCompact({ className = "" }: { className?: string }) 
       </svg>
       <span className="font-bold text-lg tracking-tight">
         The
-        <span className={`transition-colors duration-300 ${isHovered ? "text-green-500" : "text-primary"}`}>Cloud</span>
+        <span className={`transition-colors duration-300 ${isHovered ? "text-terminal-green" : "text-primary"}`}>
+          Cloud
+        </span>
         <span
           className="relative inline-block cursor-pointer transition-all duration-300 ml-0.5"
           onMouseEnter={() => setIsBoxHovered(true)}
@@ -465,16 +469,16 @@ export function CloudboxLogoCompact({ className = "" }: { className?: string }) 
           <span
             className={`relative inline-block px-1.5 py-0.5 border-2 rounded transition-all duration-300 ${
               isBoxHovered
-                ? "border-green-500 text-green-500 shadow-md shadow-green-500/50"
+                ? "border-terminal-green text-terminal-green shadow-md shadow-terminal-green/50"
                 : "border-primary text-foreground"
             }`}
           >
             box
             {isBoxHovered && (
               <>
-                <span className="absolute -top-0.5 -right-0.5 w-0.5 h-0.5 bg-green-500 rounded-full animate-ping" />
+                <span className="absolute -top-0.5 -right-0.5 w-0.5 h-0.5 bg-terminal-green rounded-full animate-ping" />
                 <span
-                  className="absolute -bottom-0.5 -left-0.5 w-0.5 h-0.5 bg-green-500 rounded-full animate-ping"
+                  className="absolute -bottom-0.5 -left-0.5 w-0.5 h-0.5 bg-terminal-green rounded-full animate-ping"
                   style={{ animationDelay: "0.2s" }}
                 />
               </>

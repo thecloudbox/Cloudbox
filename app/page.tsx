@@ -6,19 +6,7 @@ import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { services } from "@/lib/services-data"
 import { blogPosts } from "@/lib/blog-data"
-import {
-  ArrowRight,
-  CheckCircle2,
-  Users,
-  Award,
-  TrendingUp,
-  Terminal,
-  Database,
-  Cloud,
-  Lock,
-  Zap,
-  Globe,
-} from "lucide-react"
+import { ArrowRight, CheckCircle2, Users, Award, TrendingUp, Database, Cloud, Lock, Zap, Globe } from "lucide-react"
 
 export default function Home() {
   const latestPosts = blogPosts.slice(0, 3)
@@ -78,18 +66,25 @@ export default function Home() {
       <SiteHeader />
 
       {/* Hero Section */}
-      <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
-        <div className="absolute top-20 right-10 opacity-5 hidden lg:block">
-          <Terminal className="h-64 w-64" />
+      <section className="relative py-24 md:py-32 overflow-hidden bg-gradient-to-br from-terminal-bg/5 via-background to-primary/5">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.05),transparent_50%)]" />
+        {/* Terminal-style decorations */}
+        <div className="absolute top-20 right-10 opacity-10 hidden lg:block">
+          <div className="font-mono text-terminal-green text-5xl leading-tight">
+            {"$ cloud init\n> deploying...\n> ████████ 100%"}
+          </div>
         </div>
-        <div className="absolute bottom-20 left-10 opacity-5 hidden lg:block">
-          <div className="font-mono text-6xl">$_</div>
+        <div className="absolute bottom-20 left-10 opacity-10 hidden lg:block">
+          <div className="font-mono text-terminal-yellow text-6xl font-bold">{"$_"}</div>
         </div>
+
         <div className="container mx-auto px-6 relative">
           <div className="max-w-4xl">
-            <Badge variant="secondary" className="mb-6 font-mono">
-              $ enterprise-infrastructure --production-ready
+            <Badge
+              variant="secondary"
+              className="mb-6 font-mono bg-terminal-bg/10 text-terminal-green border-terminal-green/30"
+            >
+              <span className="text-terminal-yellow">$</span> enterprise-infrastructure --production-ready
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-balance">
               Enterprise Infrastructure That Scales With Your Ambition
@@ -100,12 +95,21 @@ export default function Home() {
               while you focus on building products that matter.
             </p>
             <div className="flex flex-wrap gap-4 mb-12">
-              <Button size="lg" asChild>
+              <Button
+                size="lg"
+                asChild
+                className="hover:bg-terminal-green hover:border-terminal-green transition-colors"
+              >
                 <Link href="/get-started">
                   Get Started <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button
+                size="lg"
+                variant="outline"
+                asChild
+                className="hover:border-terminal-green hover:text-terminal-green transition-colors bg-transparent"
+              >
                 <Link href="/case-studies">View Success Stories</Link>
               </Button>
             </div>
