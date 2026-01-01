@@ -73,7 +73,7 @@ services:
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - "6381:6379"
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
@@ -100,7 +100,7 @@ services:
     image: prom/prometheus:latest
     command: sh -c "while true; do sleep 1; done"
     ports:
-      - "8002:8000"
+      - "8082:8000"
     environment:
       - SERVICE_NAME=api-gateway
     networks:
@@ -167,7 +167,7 @@ services:
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
     ports:
-      - "8080:8080"
+      - "8084:8080"
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
