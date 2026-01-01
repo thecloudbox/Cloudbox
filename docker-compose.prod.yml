@@ -10,7 +10,7 @@ services:
     container_name: cloudsentinel-app
     restart: unless-stopped
     ports:
-      - "3035:3030"
+      - "3030:3030"
     environment:
       - NODE_ENV=production
       - PROMETHEUS_URL=http://prometheus:9090
@@ -23,7 +23,7 @@ services:
       - grafana
       - redis
     healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3035/api/health"]
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3030/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
