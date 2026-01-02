@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { CloudboxLogo } from "@/components/cloudbox-logo"
+import { LogoOption1 } from "@/components/logo-option-1"
 
 export function SiteFooter() {
   const footerLinks = {
@@ -31,19 +31,19 @@ export function SiteFooter() {
   }
 
   return (
-    <footer className="border-t bg-card/30 backdrop-blur-sm">
+    <footer className="border-t border-slate-800 bg-[#1a1d29]/50 backdrop-blur-sm">
       <div className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="mb-4 inline-block">
-              <CloudboxLogo />
+              <LogoOption1 />
             </Link>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-sm text-slate-400 leading-relaxed">
               Enterprise-grade DevOps and managed infrastructure services for modern cloud platforms.
             </p>
-            <div className="mt-4 pt-4 border-t">
-              <div className="text-xs text-muted-foreground">Trusted by 500+ enterprises</div>
-              <div className="text-xs font-mono text-primary mt-1">99.99% uptime SLA</div>
+            <div className="mt-4 pt-4 border-t border-slate-800">
+              <div className="text-xs text-slate-400">Trusted by 500+ enterprises</div>
+              <div className="text-xs font-mono text-emerald-400 mt-1">99.99% uptime SLA</div>
             </div>
           </div>
 
@@ -53,10 +53,7 @@ export function SiteFooter() {
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    >
+                    <Link href={link.href} className="text-sm text-slate-400 hover:text-emerald-400 transition-colors">
                       {link.name}
                     </Link>
                   </li>
@@ -66,18 +63,16 @@ export function SiteFooter() {
           ))}
         </div>
 
-        <div className="pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-muted-foreground">
-            © 2025 TheCloudbox. All rights reserved. <span className="font-mono">$ always-on</span>
-          </p>
+        <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-slate-400">© 2026 TheCloudbox. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <Link href="/status" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/status" className="text-sm text-slate-400 hover:text-emerald-400 transition-colors">
               System Status
             </Link>
-            <Link href="/security" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/security" className="text-sm text-slate-400 hover:text-emerald-400 transition-colors">
               Security
             </Link>
-            <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/privacy" className="text-sm text-slate-400 hover:text-emerald-400 transition-colors">
               Privacy
             </Link>
           </div>

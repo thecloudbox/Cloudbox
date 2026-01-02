@@ -1,165 +1,137 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { SiteHeader } from "@/components/site-header"
-import { SiteFooter } from "@/components/site-footer"
-import { services } from "@/lib/services-data"
-import { blogPosts } from "@/lib/blog-data"
-import { ArrowRight, CheckCircle2, Users, Award, TrendingUp, Database, Cloud, Lock, Zap, Globe } from "lucide-react"
+import { Card } from "@/components/ui/card"
+import { LogoOption1 } from "@/components/logo-option-1"
+import { Terminal, Shield, Cloud, Database } from "lucide-react"
 
-export default function Home() {
-  const latestPosts = blogPosts.slice(0, 3)
-
-  const stats = [
-    { label: "Enterprise Clients", value: "500+", icon: Users },
-    { label: "Uptime SLA", value: "99.99%", icon: TrendingUp },
-    { label: "Cloud Certifications", value: "150+", icon: Award },
-    { label: "Years of Experience", value: "15+", icon: CheckCircle2 },
-  ]
-
-  const cloudProviders = [
-    { name: "Amazon Web Services", short: "AWS" },
-    { name: "Google Cloud Platform", short: "GCP" },
-    { name: "Microsoft Azure", short: "Azure" },
-    { name: "Akamai/Linode", short: "Linode" },
-  ]
-
-  const technologies = [
-    { name: "Kafka", icon: Database },
-    { name: "Kubernetes", icon: Cloud },
-    { name: "MongoDB", icon: Database },
-    { name: "Redis", icon: Zap },
-    { name: "PostgreSQL", icon: Database },
-    { name: "Elasticsearch", icon: Database },
-  ]
-
-  const differentiators = [
-    {
-      icon: Lock,
-      title: "Security-First Architecture",
-      description:
-        "SOC 2 Type II certified operations with comprehensive compliance coverage for HIPAA, PCI-DSS, and GDPR requirements",
-    },
-    {
-      icon: Zap,
-      title: "Proprietary AIOps Platform",
-      description:
-        "ML-driven predictive monitoring and automated remediation reducing MTTR by 80% and preventing 95% of incidents",
-    },
-    {
-      icon: Globe,
-      title: "True Multi-Cloud Expertise",
-      description:
-        "Certified architects across AWS, GCP, Azure, and Linode with experience optimizing costs through strategic placement",
-    },
-    {
-      icon: Users,
-      title: "24/7/365 Expert Support",
-      description:
-        "Follow-the-sun coverage with 15-minute response time SLA and direct access to senior engineers, not tier-1 support",
-    },
-  ]
-
+export default function TerminalInspiredSite() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <SiteHeader />
-
-      {/* Hero Section */}
-      <section className="relative py-24 md:py-32 overflow-hidden bg-gradient-to-br from-terminal-bg/5 via-background to-primary/5">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.05),transparent_50%)]" />
-        {/* Terminal-style decorations */}
-        <div className="absolute top-20 right-10 opacity-10 hidden lg:block">
-          <div className="font-mono text-terminal-green text-5xl leading-tight">
-            {"$ cloud init\n> deploying...\n> ████████ 100%"}
+    <div className="min-h-screen bg-black">
+      <header className="border-b border-terminal-green/20 bg-terminal-bg/90 backdrop-blur-md sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center h-20">
+            <Link href="/" className="flex items-center">
+              <LogoOption1 />
+            </Link>
           </div>
-        </div>
-        <div className="absolute bottom-20 left-10 opacity-10 hidden lg:block">
-          <div className="font-mono text-terminal-yellow text-6xl font-bold">{"$_"}</div>
-        </div>
-
-        <div className="container mx-auto px-6 relative">
-          <div className="max-w-4xl">
-            <Badge
-              variant="secondary"
-              className="mb-6 font-mono bg-terminal-bg/10 text-terminal-green border-terminal-green/30"
+          <nav className="hidden md:flex items-center justify-center gap-8 pb-4">
+            <Link
+              href="/services"
+              className="text-sm font-mono text-terminal-green hover:text-terminal-yellow transition-colors"
             >
-              <span className="text-terminal-yellow">$</span> enterprise-infrastructure --production-ready
-            </Badge>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-balance">
-              Enterprise Infrastructure That Scales With Your Ambition
+              {">"} services
+            </Link>
+            <Link
+              href="/tools"
+              className="text-sm font-mono text-terminal-green hover:text-terminal-yellow transition-colors"
+            >
+              {">"} tools
+            </Link>
+            <Link
+              href="/blog"
+              className="text-sm font-mono text-terminal-green hover:text-terminal-yellow transition-colors"
+            >
+              {">"} blog
+            </Link>
+            <Button size="sm" className="bg-terminal-green hover:bg-terminal-yellow text-black font-mono">
+              $ get-started
+            </Button>
+          </nav>
+        </div>
+      </header>
+
+      <section className="relative overflow-hidden bg-black">
+        {/* Matrix-style falling text background */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-0 left-1/4 font-mono text-terminal-green text-xs animate-pulse">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div key={i} className="mb-2">
+                {"01010101 11001100 10101010 01100110"}
+              </div>
+            ))}
+          </div>
+          <div
+            className="absolute top-0 right-1/4 font-mono text-terminal-green text-xs animate-pulse"
+            style={{ animationDelay: "1s" }}
+          >
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div key={i} className="mb-2">
+                {"11100011 00110011 11001100 00110011"}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Terminal window decoration */}
+        <div className="absolute top-20 right-10 hidden lg:block">
+          <div className="bg-terminal-bg/80 border-2 border-terminal-green/30 rounded-lg p-6 font-mono text-sm">
+            <div className="flex gap-2 mb-4">
+              <div className="w-3 h-3 rounded-full bg-red-500" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500" />
+              <div className="w-3 h-3 rounded-full bg-green-500" />
+            </div>
+            <div className="text-terminal-green">
+              <div>$ systemctl status cloudbox</div>
+              <div className="text-terminal-yellow mt-2">● Active: running</div>
+              <div className="text-terminal-green/70">Uptime: 99.99%</div>
+              <div className="flex items-center gap-2 mt-2">
+                <div className="w-1.5 h-1.5 bg-terminal-green rounded-full animate-pulse" />
+                <span className="text-terminal-green/70 text-xs">monitoring...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+          <div className="max-w-4xl">
+            <div className="mb-8 font-mono">
+              <span className="text-terminal-green text-lg">user@cloudbox:~$</span>
+              <span className="text-terminal-yellow ml-2 text-lg">cat mission.txt</span>
+            </div>
+
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.1] font-mono">
+              <span className="text-terminal-green">{">"}</span> Enterprise Infrastructure
+              <br />
+              <span className="text-terminal-yellow">That Scales</span>
+              <br />
+              <span className="text-terminal-green">{">"}</span>{" "}
+              <span className="inline-block border-r-4 border-terminal-green animate-pulse">_</span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed text-pretty max-w-3xl">
-              TheCloudbox delivers expert-managed DevOps, multi-cloud infrastructure, and database operations for
-              companies that can't afford downtime. From migration strategy to 24/7 operations, we handle the complexity
-              while you focus on building products that matter.
-            </p>
-            <div className="flex flex-wrap gap-4 mb-12">
-              <Button
-                size="lg"
-                asChild
-                className="hover:bg-terminal-green hover:border-terminal-green transition-colors"
-              >
-                <Link href="/get-started">
-                  Get Started <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                asChild
-                className="hover:border-terminal-green hover:text-terminal-green transition-colors bg-transparent"
-              >
-                <Link href="/case-studies">View Success Stories</Link>
-              </Button>
-            </div>
-            <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-primary" />
-                <span>SOC 2 Type II Certified</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-primary" />
-                <span>HIPAA Compliant</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-primary" />
-                <span>24/7 Expert Support</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Stats Section */}
-      <section className="py-12 border-y bg-card/30">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => {
-              const Icon = stat.icon
-              return (
-                <div key={index} className="text-center">
-                  <Icon className="h-8 w-8 text-primary mx-auto mb-3" />
-                  <div className="text-3xl font-bold mb-1">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
+            <div className="bg-terminal-bg/50 border-l-4 border-terminal-green p-6 mb-10 font-mono">
+              <p className="text-lg text-terminal-green/90 leading-relaxed">
+                # DevOps automation + Multi-cloud + Managed databases
+                <br /># 500+ enterprises | 99.99% uptime | 24/7 support
+                <br />
+                <span className="text-terminal-yellow"># Production-ready infrastructure at terminal velocity</span>
+              </p>
+            </div>
 
-      <section className="py-12 bg-muted/30">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-8">
-            <p className="text-sm text-muted-foreground mb-4">Certified partners across all major cloud platforms</p>
-            <div className="flex flex-wrap justify-center items-center gap-8">
-              {cloudProviders.map((provider) => (
-                <div
-                  key={provider.short}
-                  className="text-xl font-bold text-muted-foreground hover:text-foreground transition-colors"
+            <div className="flex flex-wrap items-center gap-4">
+              <Link href="/get-started">
+                <Button
+                  size="lg"
+                  className="bg-terminal-green hover:bg-terminal-yellow text-black font-mono h-14 px-8 text-base"
                 >
-                  {provider.short}
+                  $ ./deploy-now
+                </Button>
+              </Link>
+              <Link href="/contact">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-terminal-green text-terminal-green hover:bg-terminal-green/10 font-mono h-14 px-8 text-base bg-transparent"
+                >
+                  {">"} request-demo
+                </Button>
+              </Link>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-6 mt-12 font-mono text-sm">
+              {["SOC-2", "HIPAA", "99.99%", "24/7"].map((item, i) => (
+                <div key={i} className="flex items-center gap-2 text-terminal-green/70">
+                  <span className="text-terminal-yellow">{">"}</span>
+                  <span>{item}</span>
                 </div>
               ))}
             </div>
@@ -167,195 +139,127 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-24">
-        <div className="container mx-auto px-6">
+      <section className="relative py-24 bg-gradient-to-b from-black to-terminal-bg/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Leading Companies Choose TheCloudbox</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
-              We're not just another managed services provider. We're infrastructure engineers who've operated systems
-              at the world's most demanding scale.
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 font-mono">
+              <span className="text-terminal-green">$ ls</span> -la features/
+            </h2>
+            <p className="text-lg text-terminal-green/70 font-mono">drwxr-xr-x 4 admin enterprise 4096 Jan 1 2024 ./</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {differentiators.map((item, index) => {
-              const Icon = item.icon
-              return (
-                <Card key={index} className="hover:shadow-lg transition-shadow">
-                  <CardContent className="p-6">
-                    <div className="flex gap-4">
-                      <div className="p-3 bg-primary/10 rounded-lg shrink-0 h-fit">
-                        <Icon className="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-                        <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Overview */}
-      <section className="py-24 bg-muted/30">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Comprehensive Infrastructure Services</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
-              From strategy to execution, we deliver end-to-end infrastructure solutions tailored to your business needs
-              and compliance requirements.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.slice(0, 6).map((service) => {
-              const Icon = service.icon
-              return (
-                <Card key={service.id} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="p-2 bg-primary/10 rounded-lg w-fit mb-4">
-                      <Icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <CardTitle>{service.title}</CardTitle>
-                    <CardDescription>{service.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button variant="ghost" className="group" asChild>
-                      <Link href={`/services#${service.slug}`}>
-                        Learn more
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              )
-            })}
-          </div>
-
-          <div className="text-center mt-12">
-            <Button size="lg" variant="outline" asChild>
-              <Link href="/services">View All Services</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Managed Database & Infrastructure Technologies</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Expert-managed operations for the technologies powering modern applications
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
-            {technologies.map((tech) => {
-              const Icon = tech.icon
-              return (
-                <Card key={tech.name} className="hover:shadow-md transition-shadow">
-                  <CardContent className="p-6 text-center">
-                    <Icon className="h-8 w-8 text-primary mx-auto mb-3" />
-                    <div className="font-semibold text-sm">{tech.name}</div>
-                  </CardContent>
-                </Card>
-              )
-            })}
-          </div>
-          <div className="text-center mt-8">
-            <Button variant="ghost" asChild>
-              <Link href="/services#managed-databases">
-                View All Managed Services <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Tech Blog Section */}
-      <section className="py-24 bg-muted/30">
-        <div className="container mx-auto px-6">
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Latest from Our Engineering Blog</h2>
-              <p className="text-lg text-muted-foreground">
-                Deep technical insights on DevOps, AIOps, cloud infrastructure, and database operations from our team of
-                expert engineers.
-              </p>
-            </div>
-            <Button variant="ghost" asChild className="hidden md:flex">
-              <Link href="/blog">
-                View all posts <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {latestPosts.map((post) => (
-              <Card key={post.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Badge variant="secondary">{post.category}</Badge>
-                    <span className="text-sm text-muted-foreground">{post.readTime}</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              {
+                icon: Terminal,
+                title: "devops-automation",
+                description: "CI/CD pipelines, IaC, GitOps workflows",
+                permissions: "rwxr-xr-x",
+              },
+              {
+                icon: Cloud,
+                title: "multi-cloud",
+                description: "AWS, GCP, Azure, Linode certified",
+                permissions: "rwxr-xr-x",
+              },
+              {
+                icon: Database,
+                title: "managed-databases",
+                description: "Kafka, MongoDB, Redis, PostgreSQL 24/7",
+                permissions: "rwxr-xr-x",
+              },
+              {
+                icon: Shield,
+                title: "security-compliance",
+                description: "SOC 2, HIPAA, zero-trust architecture",
+                permissions: "rwxr-xr-x",
+              },
+            ].map((feature, i) => (
+              <Card
+                key={i}
+                className="bg-terminal-bg/50 border-2 border-terminal-green/30 p-6 hover:border-terminal-yellow/50 hover:shadow-lg hover:shadow-terminal-green/20 transition-all group"
+              >
+                <div className="flex gap-2 mb-4">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
+                </div>
+                <div className="font-mono">
+                  <div className="flex items-center gap-3 mb-3">
+                    <feature.icon className="w-8 h-8 text-terminal-green group-hover:text-terminal-yellow transition-colors" />
+                    <span className="text-terminal-green/50 text-xs">{feature.permissions}</span>
                   </div>
-                  <CardTitle className="line-clamp-2">
-                    <Link href={`/blog/${post.slug}`} className="hover:text-primary transition-colors">
-                      {post.title}
-                    </Link>
-                  </CardTitle>
-                  <CardDescription className="line-clamp-3">{post.excerpt}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">{post.date}</span>
-                    <Link href={`/blog/${post.slug}`} className="text-primary hover:underline">
-                      Read more
-                    </Link>
-                  </div>
-                </CardContent>
+                  <h3 className="text-lg font-semibold text-terminal-green mb-2">{feature.title}/</h3>
+                  <p className="text-terminal-green/70 text-sm"># {feature.description}</p>
+                </div>
               </Card>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="text-center mt-8 md:hidden">
-            <Button variant="ghost" asChild>
-              <Link href="/blog">
-                View all posts <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+      <section className="py-20 border-y border-terminal-green/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-terminal-bg/30 border border-terminal-green/30 rounded-lg p-8 font-mono">
+            <div className="text-terminal-green mb-6">$ cat /proc/cloudbox/stats</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {[
+                { label: "enterprise_clients", value: "500+" },
+                { label: "uptime_sla", value: "99.99%" },
+                { label: "certifications", value: "150+" },
+                { label: "years_exp", value: "15+" },
+              ].map((stat, i) => (
+                <div key={i}>
+                  <div className="text-terminal-yellow text-sm mb-1">{stat.label}:</div>
+                  <div className="text-3xl font-bold text-terminal-green">{stat.value}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-6">
-          <Card className="bg-gradient-to-br from-primary/10 via-background to-accent/10 border-primary/20">
-            <CardContent className="p-12 text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">
-                Ready to Transform Your Infrastructure?
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto text-balance">
-                Join 500+ enterprises trusting TheCloudbox with their mission-critical infrastructure. Let's discuss how
-                we can accelerate your cloud journey with proven expertise and comprehensive managed services.
-              </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <Button size="lg" asChild>
-                  <Link href="/contact">Schedule a Consultation</Link>
+      <section className="py-24 relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-terminal-green/5 to-terminal-yellow/5" />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="bg-terminal-bg/80 border-2 border-terminal-green/30 rounded-lg p-12">
+            <div className="font-mono text-terminal-green mb-4">$ sudo deploy production</div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 font-mono">
+              Ready to <span className="text-terminal-yellow">./execute</span>?
+            </h2>
+            <p className="text-lg text-terminal-green/70 mb-10 font-mono">
+              # Join 500+ enterprises running mission-critical infrastructure
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Link href="/get-started">
+                <Button size="lg" className="bg-terminal-green hover:bg-terminal-yellow text-black font-mono h-14 px-8">
+                  $ start-free-trial
                 </Button>
-                <Button size="lg" variant="outline" asChild>
-                  <Link href="/case-studies">View Success Stories</Link>
+              </Link>
+              <Link href="/contact">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-terminal-green text-terminal-green hover:bg-terminal-green/10 font-mono h-14 px-8 bg-transparent"
+                >
+                  {">"} talk-to-expert
                 </Button>
-              </div>
-            </CardContent>
-          </Card>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
-      <SiteFooter />
+      <footer className="border-t border-terminal-green/20 bg-terminal-bg/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex flex-col items-center gap-6">
+            <LogoOption1 />
+            <span className="text-sm text-terminal-green/50 font-mono text-center">
+              © 2026 TheCloudbox | exit status 0
+            </span>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

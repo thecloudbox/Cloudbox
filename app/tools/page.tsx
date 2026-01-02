@@ -147,19 +147,20 @@ export default function ToolsPage() {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#0d0e14]">
       <SiteHeader />
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="py-24 bg-gradient-to-br from-primary/5 via-background to-accent/5">
-          <div className="container mx-auto px-6">
+        <section className="py-24 bg-gradient-to-br from-[#1a1d29] via-[#0d0e14] to-[#0d0e14]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(16,185,129,0.08),transparent_50%)]" />
+          <div className="relative container mx-auto px-6">
             <div className="max-w-3xl">
-              <Badge variant="secondary" className="mb-6 font-mono">
+              <Badge className="mb-6 bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
                 $ innovative-tools --production-ready
               </Badge>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">DevOps & AIOps Tools</h1>
-              <p className="text-xl text-muted-foreground leading-relaxed">
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">DevOps & AIOps Tools</h1>
+              <p className="text-xl text-slate-400 leading-relaxed">
                 Purpose-built tools solving real infrastructure challenges. Born from managing thousands of production
                 environments, now available to accelerate your operations.
               </p>
@@ -177,7 +178,10 @@ export default function ToolsPage() {
                 const toolPath = tool.name === "CloudSentinel" ? "/cloudsentinel" : `/tools/${toolSlug}`
 
                 return (
-                  <Card key={index} className="hover:shadow-lg transition-shadow">
+                  <Card
+                    key={index}
+                    className="bg-[#1a1d29] border-slate-800 hover:border-emerald-500/30 transition-all"
+                  >
                     <CardHeader>
                       <div className="flex items-start justify-between mb-4">
                         <div className="p-3 bg-primary/10 rounded-lg">
@@ -215,14 +219,18 @@ export default function ToolsPage() {
                       <Button
                         variant={tool.status === "Available" ? "default" : "outline"}
                         size="sm"
-                        className="w-full"
+                        className={
+                          tool.status === "Available"
+                            ? "bg-emerald-500 hover:bg-emerald-600"
+                            : "border-slate-700 text-slate-300"
+                        }
                         disabled={tool.status === "Coming Soon"}
                         asChild={tool.status !== "Coming Soon"}
                       >
                         {tool.status === "Coming Soon" ? (
                           <span>Coming Soon</span>
                         ) : (
-                          <Link href={toolPath}>{tool.status === "Beta" ? "Request Beta Access" : "Learn More"}</Link>
+                          <Link href={toolPath}>{tool.status === "Beta" ? "Beta Access" : "Learn More"}</Link>
                         )}
                       </Button>
                     </CardContent>

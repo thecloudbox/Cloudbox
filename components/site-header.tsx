@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { CloudboxLogo, CloudboxLogoCompact } from "@/components/cloudbox-logo"
+import { LogoOption1 } from "@/components/logo-option-1"
 
 export function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false)
@@ -21,27 +21,26 @@ export function SiteHeader() {
   ]
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <nav className="container mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center">
-          <CloudboxLogo className="hidden lg:flex" />
-          <CloudboxLogoCompact className="lg:hidden" />
+    <header className="sticky top-0 z-50 w-full border-b bg-[#0d0e14]/95 border-slate-800 backdrop-blur supports-[backdrop-filter]:bg-[#0d0e14]/60">
+      <nav className="container mx-auto px-6 h-16 flex items-center justify-between gap-8">
+        <Link href="/" className="flex items-center flex-shrink-0">
+          <LogoOption1 />
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-6 flex-1 justify-center">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="text-sm font-medium text-muted-foreground hover:text-sea-green transition-colors"
+              className="text-sm font-medium text-slate-300 hover:text-emerald-400 transition-colors"
             >
               {item.name}
             </Link>
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4 flex-shrink-0">
           <Button variant="ghost" asChild>
             <Link href="/contact">Contact</Link>
           </Button>
@@ -64,7 +63,7 @@ export function SiteHeader() {
                   key={item.name}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="text-lg font-medium hover:text-sea-green transition-colors"
+                  className="text-lg font-medium hover:text-emerald-400 transition-colors"
                 >
                   {item.name}
                 </Link>
