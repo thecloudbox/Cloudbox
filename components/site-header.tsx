@@ -22,13 +22,16 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-[#0d0e14]/95 border-slate-800 backdrop-blur supports-[backdrop-filter]:bg-[#0d0e14]/60">
-      <nav className="container mx-auto px-6 h-16 flex items-center justify-between gap-8">
-        <Link href="/" className="flex items-center flex-shrink-0">
-          <LogoOption1 />
-        </Link>
+      <nav className="container mx-auto px-6 h-16 flex items-center">
+        {/* Logo - Left aligned */}
+        <div className="flex items-center mr-8">
+          <Link href="/" className="flex items-center">
+            <LogoOption1 compact />
+          </Link>
+        </div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-6 flex-1 justify-center">
+        {/* Desktop Navigation - Center */}
+        <div className="hidden md:flex items-center gap-6 flex-1">
           {navigation.map((item) => (
             <Link
               key={item.name}
@@ -40,18 +43,19 @@ export function SiteHeader() {
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-4 flex-shrink-0">
+        {/* Actions - Right aligned */}
+        <div className="hidden md:flex items-center gap-4 ml-auto">
           <Button variant="ghost" asChild>
             <Link href="/contact">Contact</Link>
           </Button>
-          <Button asChild>
-            <Link href="/get-started">Get Started</Link>
+          <Button asChild className="bg-emerald-600 hover:bg-emerald-700">
+            <Link href="/get-started">$ get-started</Link>
           </Button>
         </div>
 
         {/* Mobile Navigation */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className="md:hidden">
+          <SheetTrigger asChild className="md:hidden ml-auto">
             <Button variant="ghost" size="icon">
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
