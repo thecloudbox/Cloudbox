@@ -49,6 +49,7 @@ That's it! The setup script will handle everything automatically.
 - Partner and technology showcase
 
 ### Infrastructure Tools
+- **CloudSentinel** - ML-powered AIOps platform (Open Source)
 - **InfraPredict** - AI-powered capacity planning
 - **ConfigDrift Scanner** - Multi-cloud configuration monitoring
 - **ObservabilityHub** - Unified monitoring platform
@@ -56,37 +57,37 @@ That's it! The setup script will handle everything automatically.
 - **CloudCostOptimizer** - Real-time cost optimization
 - **IaC Generator** - Terraform template generation
 
-### Logo Options
-View 5 professional logo designs:
-- `/1` - Terminal Window with Cloud Output (Recommended)
-- `/2` - Command Transform Animation
-- `/3` - Container Cube with Circuit Patterns
-- `/4` - Circuit Cloud Design
-- `/5` - Infrastructure Stack Layers
-
 ## 🏗️ Architecture
 
 ```
 ┌─────────────────────────────────────────────┐
 │           Nginx Reverse Proxy               │
 │         (Load Balancer + SSL/TLS)           │
-└──────────────┬──────────────────────────────┘
-               │
-┌──────────────▼──────────────────────────────┐
+└───────────────────────┬─────────────────────┘
+                         │
+┌───────────────────────▼─────────────────────┐
 │       Next.js Application (Port 3000)       │
 │   - Multi-cloud service provisioning        │
 │   - IaC generation (Terraform)              │
 │   - Cost estimation engine                  │
 │   - Professional marketing website          │
-└──────────────┬──────────────────────────────┘
-               │
-       ┌───────┴────────┐
-       │                │
-┌──────▼──────┐  ┌──────▼──────┐
-│ PostgreSQL  │  │    Redis    │
-│  Database   │  │    Cache    │
-│ (Port 5432) │  │ (Port 6379) │
-└─────────────┘  └─────────────┘
+└───────────────────────┬─────────────────────┘
+                         │
+┌───────────────────────▼─────────────────────┐
+│                  CloudSentinel Platform     │
+│  ┌──────────────┐  ┌──────────────┐  ┌─────│
+│  │   Anomaly    │  │     Log      │  │     │
+│  │   Detection  │  │   Analysis   │  │  Au │
+│  └──────────────┘  └──────────────┘  └─────│
+└───────────────────────┬─────────────────────┘
+                         │
+┌───────────────────────▼─────────────────────┐
+│             Sample Microservices (Istio Mesh)│
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐ │
+│  │ Frontend │  │  Orders  │  │ Payments │ │
+│  │  :3000   │  │  :8080   │  │  :8080   │ │
+│  └──────────┘  └──────────┘  └──────────┘ │
+└─────────────────────────────────────────────┘
 ```
 
 ## 📦 Services
@@ -97,6 +98,7 @@ View 5 professional logo designs:
 | PostgreSQL | 5432 | Primary database |
 | Redis | 6379 | Caching layer |
 | Nginx | 80/443 | Reverse proxy |
+| CloudSentinel | 3030 | ML-powered AIOps platform |
 
 ## 🛠️ Prerequisites
 
@@ -347,28 +349,60 @@ npm run lint
 - [API Documentation](./docs/API.md) - API endpoints and usage
 - [Architecture Guide](./docs/ARCHITECTURE.md) - System architecture
 - [Contributing Guide](./CONTRIBUTING.md) - How to contribute
+- [CloudSentinel Getting Started Guide](./docs/GETTING-STARTED.md) - Complete setup instructions
+- [CloudSentinel Implementation Guide](./docs/CLOUDSENTINEL-COMPLETE-GUIDE.md) - Detailed implementation
+- [CloudSentinel CXO Cost Analytics](./docs/CXO-COST-INTELLIGENCE.md) - Cost allocation guide
+- [CloudSentinel Grafana Integration](./docs/CXO-GRAFANA-INTEGRATION.md) - Dashboard setup
+- [CloudSentinel Tagging Strategy](./docs/CXO-COST-TAGGING-STRATEGY.md) - Label requirements
 
-## 🤝 Support
+## 🎯 CloudSentinel - Open Source AIOps Platform
 
-### Client Experience
+CloudSentinel is our flagship open-source AIOps platform featuring:
 
-We have extensive experience working with:
-- **Paytm** - Financial services infrastructure
-- **Gojek** - Multi-service platform scaling
-- **IRCTC** - High-traffic railway booking system
-- **Mystifly** - Travel technology infrastructure
-- **Part+** - E-commerce platform management
+### Key Features
+- **Anomaly Detection** - ML-powered detection with Z-score analysis
+- **Natural Language Queries** - Ask questions in plain English
+- **Cost Intelligence** - Cross-cloud cost correlation and optimization
+- **CXO Cost Analytics** - Per-service cost breakdown with shared infrastructure allocation
+- **Blast Radius Predictor** - ML-powered change impact forecasting
+- **Auto-Generated Runbooks** - Intelligent remediation playbooks
 
-### Get Help
+### Quick Start
 
-- 📧 Email: support@thecloudbox.io
-- 💬 Slack: [Join our community](https://thecloudbox.slack.com)
-- 🐛 Issues: [GitHub Issues](https://github.com/thecloudbox/thecloudbox/issues)
-- 📖 Docs: [Documentation Site](https://docs.thecloudbox.io)
+**Local Demo:**
+```bash
+# Access CloudSentinel UI
+open http://localhost:3030/cloudsentinel
 
-## 📄 License
+# Start monitoring
+# Click "Start Live Demo" in the dashboard
+```
 
-Copyright © 2025 TheCloudbox. All rights reserved.
+**Full Deployment with Istio:**
+```bash
+# Install Istio service mesh
+./demo/scripts/install-istio.sh
+
+# Deploy demo infrastructure
+./demo/scripts/deploy-all.sh
+
+# Deploy sample microservices
+kubectl apply -f demo/kubernetes/
+
+# Access CloudSentinel
+kubectl port-forward -n cloudsentinel svc/cloudsentinel-web 3030:3030
+```
+
+### Demo Scenarios
+```bash
+# Run test scenarios
+./demo/scripts/test-scenarios.sh
+
+# Trigger specific scenarios
+./demo/scenarios/high-cpu.sh        # High CPU usage
+./demo/scenarios/memory-leak.sh     # Memory leak simulation
+./demo/scenarios/service-failure.sh # Service failure cascade
+```
 
 ## 🙏 Acknowledgments
 

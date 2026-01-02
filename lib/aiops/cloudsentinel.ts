@@ -245,4 +245,40 @@ export class CloudSentinel {
   getRunbookForIncident(incident: Incident) {
     return this.runbookGenerator.getRunbookForIncident(incident)
   }
+
+  /**
+   * Get all detected anomalies
+   */
+  getAnomalies(limit?: number): Anomaly[] {
+    const sorted = [...this.detectedAnomalies].sort((a, b) => b.timestamp - a.timestamp)
+    return limit ? sorted.slice(0, limit) : sorted
+  }
+
+  /**
+   * Get anomalies for a specific service
+   */
+  getAnomaliesByService(service: string, limit?: number): Anomaly[] {
+    const filtered = this.detectedAnomalies.filter((a) => a.service === service)
+    const sorted = filtered.sort((a, b) => b.timestamp - a.timestamp)
+    return limit ? sorted.slice(0, limit) : sorted
+  }
+
+  /**
+   * Get anomaly statistics
+   */
+  getAnomalyStats() {
+    const byService: Record<string, number> = {}
+    const bySeverity: Record<string, number> = { low: 0, medium: 0, high: 0, critical: 0 }
+
+    this.detectedAnomalies.forEach((anomaly) => {
+      byService[anomaly.service] = (byService[anomaly.service] || 0) + 1
+      bySeverity[anomaly.severity]++
+    })
+
+    return {
+      total: this.detectedAnomalies.length,
+      byService,
+      bySeverity,
+    }
+  }
 }

@@ -1,0 +1,32 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: orders-fault-injection
+  namespace: demo
+spec:
+  hosts:
+  - orders-service
+  http:
+  - match:
+    - headers:
+        x-chaos-test:
+          exact: "true"
+    fault:
+      delay:
+        percentage:
+          value: 10.0
+        fixedDelay: 5s
+      abort:
+        percentage:
+          value: 5.0
+        httpStatus: 503
+    route:
+    - destination:
+        host: orders-service
+        port:
+          number: 8080
+  - route:
+    - destination:
+        host: orders-service
+        port:
+          number: 8080

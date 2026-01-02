@@ -1,0 +1,59 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: demo-gateway
+  namespace: demo
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: demo-routes
+  namespace: demo
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - demo-gateway
+  http:
+  - match:
+    - uri:
+        prefix: "/api/orders"
+    route:
+    - destination:
+        host: orders-service
+        port:
+          number: 8080
+  - match:
+    - uri:
+        prefix: "/api/payments"
+    route:
+    - destination:
+        host: payments-service
+        port:
+          number: 8080
+  - match:
+    - uri:
+        prefix: "/api/notifications"
+    route:
+    - destination:
+        host: notifications-service
+        port:
+          number: 8080
+  - match:
+    - uri:
+        prefix: "/"
+    route:
+    - destination:
+        host: frontend
+        port:
+          number: 3000

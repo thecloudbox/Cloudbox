@@ -11,6 +11,14 @@ export const metadata: Metadata = {
   title: "TheCloudbox - Enterprise DevOps & Managed Services",
   description:
     "Expert DevOps, managed services, cloud migration, and infrastructure solutions for modern enterprises. 24/7 NOC, IaC, managed Kafka, MongoDB, Elasticsearch, MySQL, PostgreSQL, and Redis clusters.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-touch-icon.jpg", sizes: "180x180", type: "image/png" }],
+    other: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+  },
   keywords: [
     "DevOps",
     "Managed Services",
@@ -59,7 +67,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-    generator: 'v0.app'
+  generator: "v0.app",
 }
 
 export default function RootLayout({
