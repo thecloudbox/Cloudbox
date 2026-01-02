@@ -1,7 +1,7 @@
-import Link from "next/link"
+import { LogoOption1 } from "@/components/logo-option-1"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { LogoOption1 } from "@/components/logo-option-1"
+import Link from "next/link"
 import { Terminal, Shield, Cloud, Database } from "lucide-react"
 
 export default function TerminalInspiredSite() {
@@ -9,39 +9,38 @@ export default function TerminalInspiredSite() {
     <div className="min-h-screen bg-black">
       <header className="border-b border-terminal-green/20 bg-terminal-bg/90 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center h-20">
+          <div className="flex items-center justify-between h-20">
             <Link href="/" className="flex items-center">
               <LogoOption1 />
             </Link>
+            <nav className="hidden md:flex items-center gap-8">
+              <Link
+                href="/services"
+                className="text-sm font-mono text-terminal-green hover:text-terminal-yellow transition-colors"
+              >
+                {">"} services
+              </Link>
+              <Link
+                href="/tools"
+                className="text-sm font-mono text-terminal-green hover:text-terminal-yellow transition-colors"
+              >
+                {">"} tools
+              </Link>
+              <Link
+                href="/blog"
+                className="text-sm font-mono text-terminal-green hover:text-terminal-yellow transition-colors"
+              >
+                {">"} blog
+              </Link>
+              <Button size="sm" className="bg-terminal-green hover:bg-terminal-yellow text-black font-mono">
+                $ get-started
+              </Button>
+            </nav>
           </div>
-          <nav className="hidden md:flex items-center justify-center gap-8 pb-4">
-            <Link
-              href="/services"
-              className="text-sm font-mono text-terminal-green hover:text-terminal-yellow transition-colors"
-            >
-              {">"} services
-            </Link>
-            <Link
-              href="/tools"
-              className="text-sm font-mono text-terminal-green hover:text-terminal-yellow transition-colors"
-            >
-              {">"} tools
-            </Link>
-            <Link
-              href="/blog"
-              className="text-sm font-mono text-terminal-green hover:text-terminal-yellow transition-colors"
-            >
-              {">"} blog
-            </Link>
-            <Button size="sm" className="bg-terminal-green hover:bg-terminal-yellow text-black font-mono">
-              $ get-started
-            </Button>
-          </nav>
         </div>
       </header>
 
       <section className="relative overflow-hidden bg-black">
-        {/* Matrix-style falling text background */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-0 left-1/4 font-mono text-terminal-green text-xs animate-pulse">
             {Array.from({ length: 20 }).map((_, i) => (
@@ -62,7 +61,6 @@ export default function TerminalInspiredSite() {
           </div>
         </div>
 
-        {/* Terminal window decoration */}
         <div className="absolute top-20 right-10 hidden lg:block">
           <div className="bg-terminal-bg/80 border-2 border-terminal-green/30 rounded-lg p-6 font-mono text-sm">
             <div className="flex gap-2 mb-4">
