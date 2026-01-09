@@ -1,0 +1,105 @@
+{
+  "dashboard": {
+    "title": "MySQL ChaosBox Dashboard",
+    "tags": ["mysql", "chaos", "dba"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Chaos Events Timeline",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(chaos_event_total[5m])",
+            "legendFormat": "{{scenario}} on {{target}}"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Active Chaos Scenarios",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "count(chaos_event_duration_seconds > 0)"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Impact - Queries Affected",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "chaos_impact_queries_affected",
+            "legendFormat": "{{target}}"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Impact - Connections Affected",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "chaos_impact_connections_affected",
+            "legendFormat": "{{target}}"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Recovery Time",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, chaos_recovery_time_seconds)",
+            "legendFormat": "p95 - {{scenario}}"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "MySQL Availability",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "mysql_up"
+          }
+        ],
+        "thresholds": [
+          {
+            "value": 0,
+            "color": "red"
+          },
+          {
+            "value": 1,
+            "color": "green"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Replication Lag",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "mysql_replication_lag_seconds",
+            "legendFormat": "{{instance}}"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "MySQL Connections",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "mysql_connections_current",
+            "legendFormat": "{{instance}}"
+          }
+        ]
+      }
+    ]
+  }
+}

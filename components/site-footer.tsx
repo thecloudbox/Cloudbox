@@ -31,29 +31,34 @@ export function SiteFooter() {
   }
 
   return (
-    <footer className="border-t border-slate-800 bg-[#1a1d29]/50 backdrop-blur-sm">
-      <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
-          <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="mb-4 inline-block">
-              <LogoOption1 />
-            </Link>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              Enterprise-grade DevOps and managed infrastructure services for modern cloud platforms.
-            </p>
-            <div className="mt-4 pt-4 border-t border-slate-800">
-              <div className="text-xs text-slate-400">Trusted by 500+ enterprises</div>
-              <div className="text-xs font-mono text-emerald-400 mt-1">99.99% uptime SLA</div>
-            </div>
+    <footer className="border-t border-terminal-green/20 bg-terminal-bg/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Logo and description */}
+        <div className="mb-12">
+          <Link href="/" className="inline-block mb-4">
+            <LogoOption1 />
+          </Link>
+          <p className="text-sm text-terminal-green/70 font-mono max-w-md">
+            Enterprise-grade DevOps and managed infrastructure services for modern cloud platforms.
+          </p>
+          <div className="mt-4 pt-4 border-t border-terminal-green/20">
+            <div className="text-xs text-terminal-green/50 font-mono">Trusted by 500+ enterprises</div>
+            <div className="text-xs font-mono text-terminal-green mt-1">99.99% uptime SLA</div>
           </div>
+        </div>
 
+        {/* Links grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h3 className="font-semibold mb-4">{category}</h3>
+              <h3 className="font-semibold text-terminal-green mb-4 font-mono">{category}</h3>
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.name}>
-                    <Link href={link.href} className="text-sm text-slate-400 hover:text-emerald-400 transition-colors">
+                    <Link
+                      href={link.href}
+                      className="text-sm text-terminal-green/70 hover:text-terminal-yellow transition-colors font-mono"
+                    >
                       {link.name}
                     </Link>
                   </li>
@@ -63,16 +68,26 @@ export function SiteFooter() {
           ))}
         </div>
 
-        <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-slate-400">© 2026 TheCloudbox. All rights reserved.</p>
+        {/* Bottom bar */}
+        <div className="pt-8 border-t border-terminal-green/20 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-terminal-green/50 font-mono">© 2026 TheCloudbox | exit status 0</p>
           <div className="flex items-center gap-6">
-            <Link href="/status" className="text-sm text-slate-400 hover:text-emerald-400 transition-colors">
+            <Link
+              href="/status"
+              className="text-sm text-terminal-green/70 hover:text-terminal-yellow transition-colors font-mono"
+            >
               System Status
             </Link>
-            <Link href="/security" className="text-sm text-slate-400 hover:text-emerald-400 transition-colors">
+            <Link
+              href="/security"
+              className="text-sm text-terminal-green/70 hover:text-terminal-yellow transition-colors font-mono"
+            >
               Security
             </Link>
-            <Link href="/privacy" className="text-sm text-slate-400 hover:text-emerald-400 transition-colors">
+            <Link
+              href="/privacy"
+              className="text-sm text-terminal-green/70 hover:text-terminal-yellow transition-colors font-mono"
+            >
               Privacy
             </Link>
           </div>
